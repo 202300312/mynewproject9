@@ -1,0 +1,125 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>콘서트장 협업</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+*{box-sizing:border-box}html,body{padding:0;margin:0;width:100%;height:100%;overflow:hidden;background:#f8fbf8}
+#lesson{width:100%;height:100%;border:0;display:block}
+@media(prefers-color-scheme:dark){html,body{background:#131c17}}
+</style></head><body>
+<iframe id="lesson" title="콘서트장 학습" sandbox="allow-same-origin allow-scripts allow-forms allow-modals allow-downloads allow-popups allow-popups-to-escape-sandbox"></iframe>
+<script>
+const tell=(type,more)=>window.parent.postMessage({isStreamlitMessage:true,type,...more},'*');
+let template=null,activeContext=null,currentUser=null,currentGroupInfo=null,version=-1,pending=new Map(),debounce=null,remotePending=null,lastTouch=0,installed=false;
+let groupInfoFingerprint="";let sequence=0;function send(v){tell('streamlit:setComponentValue',{value:{...v,event_id:String(Date.now())+'_'+(++sequence)},dataType:'json'})}
+function notifyChanges(){if(!pending.size)return;const patch=Object.fromEntries(pending);pending.clear();send({type:'save',patch,context:activeContext})}
+function getDiff(before,after,path=[],result=[]){
+ if(JSON.stringify(before)===JSON.stringify(after))return result;
+ if(before&&after&&typeof before==='object'&&typeof after==='object'&&Array.isArray(before)===Array.isArray(after)){
+   if(Array.isArray(before)){if(before.length!==after.length){result.push({path,value:after});return result}
+     for(let i=0;i<after.length;i++)getDiff(before[i],after[i],[...path,i],result);
+   } else {for(const k of new Set([...Object.keys(before),...Object.keys(after)])){
+       if(!(k in after))result.push({path:[...path,k],delete:true});else getDiff(before[k],after[k],[...path,k],result);
+     }}
+ }else result.push({path,value:after});
+ return result;
+}
+function encodeBoot(args){
+ const user=JSON.stringify(args.user).replaceAll('<','\\u003c');
+ const context=JSON.stringify(args.context).replaceAll('<','\\u003c');
+ const entries=JSON.stringify(args.snapshot||{}).replaceAll('<','\\u003c');
+ const group=JSON.stringify(args.groupInfo||{}).replaceAll('<','\\u003c');
+ return `<script>(function(){
+ const user=${user},context=${context},entries=${entries},group=${group};
+ const prefix='gc-shared:';
+ window.gcUser=user;window.accountStorageKey=key=>prefix+key;
+ window.gcLogOut=()=>window.parent.postMessage({concertBridge:true,type:'logout'},'*');
+ document.documentElement.classList.add('gc-authenticated');
+ for(let i=localStorage.length-1;i>=0;i--){const k=localStorage.key(i);if(k&&k.startsWith(prefix))localStorage.removeItem(k)}
+ for(const [k,v] of Object.entries(entries))if(k.startsWith(prefix))localStorage.setItem(k,v);
+ let hydrating=false; const original=Storage.prototype.setItem,remove=Storage.prototype.removeItem;
+ const push=(key,oldValue,newValue)=>{if(hydrating||!key.startsWith(prefix))return;
+   window.parent.postMessage({concertBridge:true,type:'change',key,oldValue,newValue},'*');};
+ Storage.prototype.setItem=function(k,v){const old=this.getItem(k);original.call(this,k,v);if(this===localStorage&&old!==String(v))push(String(k),old,String(v))};
+ Storage.prototype.removeItem=function(k){const old=this.getItem(k);remove.call(this,k);if(this===localStorage&&old!==null)push(String(k),old,null)};
+ window.gcApplyServerSnapshot=function(snapshot){
+   const incoming=snapshot||{};const changed=[];hydrating=true;
+   try {
+     const keys=new Set(Object.keys(incoming).filter(k=>k.startsWith(prefix)));
+     for(let i=0;i<localStorage.length;i++){
+       const k=localStorage.key(i);if(k&&k.startsWith(prefix))keys.add(k);
+     }
+     for(const k of keys){
+       const next=Object.prototype.hasOwnProperty.call(incoming,k)?incoming[k]:null;
+       const prev=localStorage.getItem(k);
+       if(next===prev)continue;
+       if(next===null)remove.call(localStorage,k);
+       else original.call(localStorage,k,String(next));
+       changed.push(k);
+     }
+     if(changed.length)window.dispatchEvent(new CustomEvent('gc-remote-data',{detail:{keys:changed}}));
+   }finally{hydrating=false;}
+ };
+ window.gcShowGroupMessage=window.gcShowGroupMessage||(()=>{});
+ window.gcGroupBoot=group;
+ document.addEventListener('input',()=>window.parent.postMessage({concertBridge:true,type:'typing'},'*'),{capture:true});
+ window.addEventListener('load',()=>{window.gcRenderGroupManager?.(window.gcGroupBoot)});
+})();<\/script>`;
+}
+function mount(args){if(!template)return;const frame=document.getElementById('lesson');activeContext=args.context;currentUser=args.user;currentGroupInfo=args.groupInfo;version=args.version??0;installed=true;pending.clear();remotePending=null;groupInfoFingerprint=JSON.stringify(args.groupInfo||{});
+ frame.srcdoc=template.replace('<body>','<body>'+encodeBoot(args));}
+function applyRemote(args){
+ if(!installed)return;
+ currentGroupInfo=args.groupInfo||{};
+ const nextInfo=JSON.stringify(currentGroupInfo);
+ if(nextInfo!==groupInfoFingerprint){groupInfoFingerprint=nextInfo;groupInfoPending=currentGroupInfo;}
+ if((args.version??0)>version){version=args.version;remotePending=args.snapshot||{};}
+ trySync();
+}
+let groupInfoPending=null;
+function trySync(){
+ const frame=document.getElementById('lesson');
+ if(!frame?.contentWindow?.gcApplyServerSnapshot)return;
+ if(pending.size||Date.now()-lastTouch<1900)return;
+ try{
+   // Never destroy the student's active field or selection while editing.
+   const active=frame.contentDocument?.activeElement;
+   if(active?.matches?.('input,textarea,select,[contenteditable="true"]'))return;
+   if(remotePending){
+     const snapshot=remotePending;
+     frame.contentWindow.gcApplyServerSnapshot(snapshot);
+     remotePending=null;
+   }
+   if(groupInfoPending){
+     frame.contentWindow.gcRenderGroupManager?.(groupInfoPending);
+     groupInfoPending=null;
+   }
+ }catch(e){console.error('협업 데이터 동기화:',e)}
+}
+window.addEventListener('message',event=>{
+ const frame=document.getElementById('lesson');
+ if(event.data?.concertBridge&&event.source===frame.contentWindow){
+  const d=event.data;
+  if(d.type==='logout'){clearTimeout(debounce);const patch=Object.fromEntries(pending);pending.clear();send({type:'logout',context:activeContext,patch});return}
+  if(d.type==='typing'){lastTouch=Date.now();return}
+  if(d.type==='group_action'){clearTimeout(debounce);const patch=Object.fromEntries(pending);pending.clear();send({type:'group_action',action:d.action,detail:d.detail,context:activeContext,patch});return}
+  if(d.type==='change'){if(activeContext==='onboarding')return;
+   lastTouch=Date.now();
+   let change=d.newValue;
+   if(d.newValue!==null&&d.oldValue!==null){try{const old=JSON.parse(d.oldValue),neu=JSON.parse(d.newValue);if(old&&neu&&typeof old==='object'&&typeof neu==='object'){
+      change={kind:'json_ops',ops:getDiff(old,neu)};
+   }}catch(e){}}
+   // Aggregate field operations for the same key until debounce flush.
+   const previous=pending.get(d.key);
+   if(previous?.kind==='json_ops'&&change?.kind==='json_ops')previous.ops.push(...change.ops);
+   else pending.set(d.key,change);
+   clearTimeout(debounce);debounce=setTimeout(notifyChanges,520);
+   return;
+  }
+  return;
+ }
+ if(event.data?.type==='streamlit:render'){
+  const args=event.data.args||{};if(!args.user)return;
+  if(!template)return;
+  if(!installed||activeContext!==args.context)mount(args);else applyRemote(args);
+ }
+});
+setInterval(trySync,400);
+fetch('student.html',{cache:'no-store'}).then(r=>r.text()).then(t=>{template=t;tell('streamlit:componentReady',{apiVersion:1});tell('streamlit:setFrameHeight',{height:850});}).catch(e=>{document.body.textContent='웹앱 불러오기 실패: '+e.message});
+</script></body></html>

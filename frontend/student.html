@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>모두를 위한 학교 콘서트장 만들기</title><style>
+:root{--bg:#f4f7f8;--navy:#122b3a;--green:#087968;--text:#22323d;--border:#dce6e8;--soft:#ebf6f2}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,'Malgun Gothic',sans-serif;color:var(--text);line-height:1.55}header{background:linear-gradient(115deg,#112c39,#116d61);color:white;padding:28px max(22px,calc((100vw - 1100px)/2))}header h1{margin:0 0 8px;font-size:clamp(23px,3vw,33px)}header p{margin:0;color:#d5f1e9;font-size:14px}.wrap{max-width:1100px;margin:22px auto;padding:0 16px 60px}.tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px}.tab{border:1px solid #cbd9da;border-radius:12px;background:white;padding:12px 18px;color:#304953;font-weight:800;cursor:pointer}.tab.active{background:#126b5d;color:white;border-color:#126b5d}.panel{display:none}.panel.active{display:block}.card{background:white;border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:16px;box-shadow:0 3px 15px #183a4309}h2{font-size:23px;margin:0 0 10px;color:#153744}h3{font-size:18px;margin:0 0 12px}.sub{font-size:14px;color:#58717a;margin:0 0 15px}.hint{padding:12px 14px;border-left:4px solid #1d917a;background:#ebf8f4;border-radius:6px;font-size:14px;margin:12px 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.data-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:2px solid #8fb9a8;border-radius:14px;overflow:hidden;background:#fff}.data-grid .field{min-width:0;padding:14px 14px 12px 14px;border-right:1.5px solid #a7c9ba;border-bottom:1.5px solid #a7c9ba;background:#fff}.data-grid .field:nth-child(3n){border-right:none}.data-grid .field:nth-last-child(-n+3){border-bottom:none}label{display:block;font-size:13px;font-weight:800;margin-bottom:5px}input{width:100%;padding:10px 11px;font-size:15px;border:2px solid #93bdaa;border-radius:8px;color:#1a353e;background:white}input:focus{outline:2px solid #5bbbb0}small{display:block;color:#647c83;margin-top:4px;font-size:12px;line-height:1.35}.field{min-width:0}button{cursor:pointer;font:inherit}.btn{border:0;background:#0e7668;color:white;border-radius:10px;padding:11px 16px;font-weight:800}.btn.secondary{background:#e3efec;color:#176b61}.btn.outline{background:white;border:1px solid #aac8c0;color:#1a6e65}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{background:#f3f8f7;padding:15px;border-radius:12px}.metric span{font-size:12px;color:#55716d}.metric strong{display:block;font-size:clamp(18px,2.5vw,27px);color:#115f55;margin:4px 0}.bars{margin-top:12px}.barrow{display:grid;grid-template-columns:110px 1fr 93px;gap:12px;align-items:center;margin:12px 0;font-size:13px}.track{height:15px;background:#e7eeef;border-radius:99px;overflow:hidden}.fill{height:100%;border-radius:99px;background:#168976;transition:width .2s}.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}.comparisonTable{width:100%;border-collapse:collapse;font-size:14px}.comparisonTable th,.comparisonTable td{border-bottom:1px solid #e3ebec;padding:10px 8px;text-align:right}.comparisonTable th:first-child,.comparisonTable td:first-child{text-align:left}.comparisonTable thead{background:#eef6f3}.positive{color:#0c8167;font-weight:800}.negative{color:#b54435;font-weight:800}.sources a{overflow-wrap:anywhere;color:#096d61}.sources li{margin:10px 0}.note{color:#5f747b;font-size:13px}.hide{display:none!important}footer{color:#627780;text-align:center;font-size:12px}@media(max-width:750px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.compare{grid-template-columns:1fr}.metrics{grid-template-columns:1fr}.barrow{grid-template-columns:80px 1fr 75px}}@media(max-width:460px){.grid{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.card{padding:16px}}@media print{header,.tabs,.actions{display:none!important}.panel{display:block!important}.card{break-inside:avoid}}
+
+.teamgrid{display:grid;grid-template-columns:1fr 2fr;gap:12px}.status{color:#126b5d;font-size:13px;font-weight:700}.report{display:none}.report table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0 22px}.report th,.report td{border:1px solid #b9c7ca;padding:6px 8px;text-align:left}.report th{background:#eaf3f1}.report h2{border-bottom:2px solid #187b70;padding-bottom:7px;margin-top:25px}.report p{margin:7px 0}.report .rmeta{color:#425961;font-size:12px}.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.measure-table{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:650px){.teamgrid,.measure-table{grid-template-columns:1fr}}
+@media print{@page{size:A4;margin:14mm}header,main,footer,.tabs,.actions{display:none!important}.report{display:block!important;background:#fff;color:#171d20;padding:0}.report .report-page{break-before:page}.report .report-page:first-child{break-before:auto}.report h1{font-size:21px;margin:0 0 8px}.report h2{font-size:16px}.report h3{font-size:13px}.report table{font-size:10px}.report .no-print{display:none!important}}
+
+/* STUDENT CONCERT EDITION — vivid, accessible interface */
+:root{--bg:#0c1024;--navy:#141b42;--green:#32e1b5;--text:#eef2ff;--border:#3d456c;--soft:#17284a}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(ellipse 75% 55% at 0% 6%,#37327d 0%,transparent 58%),radial-gradient(ellipse 52% 65% at 100% 30%,#103f56 0%,transparent 70%),#0c1024;color:var(--text);min-height:100vh}
+header{position:relative;isolation:isolate;overflow:hidden;padding-top:54px;padding-bottom:56px;border-bottom:1px solid #6e67d766;background:linear-gradient(108deg,#1c1c57 0%,#2d3276 48%,#0f6b70 100%)}
+header:before{content:'';position:absolute;z-index:-1;width:480px;height:480px;border-radius:50%;top:-300px;right:-80px;background:radial-gradient(circle,#00f4c866,transparent 66%)}
+header:after{content:'';position:absolute;z-index:-1;width:320px;height:320px;border:2px solid #ffffff24;transform:rotate(25deg);border-radius:35%;right:8%;top:10px;box-shadow:0 0 0 35px #ffffff09,0 0 0 72px #ffffff07}
+header h1{font-weight:900;letter-spacing:-1.5px;font-size:clamp(30px,4vw,48px);line-height:1.22;max-width:800px;text-shadow:0 6px 22px #080f3b88}
+header p{display:inline-flex;background:#ffffff1c;color:#e9fffd;border:1px solid #ffffff55;padding:6px 15px;border-radius:99px;font-size:14px;letter-spacing:.2px;margin-top:12px;font-weight:750}
+.wrap{max-width:1170px;margin:0 auto;padding:24px 18px 72px}
+.tabs{position:sticky;top:0;z-index:12;padding:13px 0 15px;backdrop-filter:blur(17px);background:#0c1024c9;gap:10px}
+.tab{background:#1e264d;color:#d9defc;border:1px solid #444f84;border-radius:16px;padding:13px 18px;transition:transform .16s,background .16s,box-shadow .16s;box-shadow:0 5px 16px #02061b35}
+.tab:hover{transform:translateY(-2px);background:#2b3565}
+.tab.active{color:#08152d;background:linear-gradient(110deg,#65f4c7,#66d7fa);border-color:#abfce9;box-shadow:0 5px 22px #23edc85a}
+.card{background:linear-gradient(160deg,#20294e 0%,#18203f 100%);border:1px solid #414b79;border-radius:23px;padding:25px;box-shadow:0 15px 38px #02071954;margin-bottom:20px}
+#teamCard{margin-top:-12px;position:relative;z-index:1;border-color:#6d76af;background:linear-gradient(115deg,#292c63,#1b3454 60%,#174a52);box-shadow:0 15px 30px #060a2690}
+h2{font-size:clamp(21px,2.5vw,26px);color:#fff;font-weight:850;letter-spacing:-.65px}
+h3{font-size:19px;color:#c4fff2;font-weight:800;letter-spacing:-.3px}
+.sub{color:#b7c5e2;font-size:14px;line-height:1.68}
+.note,small{color:#b8c5dd}
+label{font-size:13px;color:#e5eaff;letter-spacing:.04px}
+input{background:#111936;color:#fcfdff;border:1px solid #5d6897;border-radius:12px;min-height:44px;font-weight:600;transition:border-color .14s,box-shadow .14s}
+input::placeholder{color:#8997bc}
+input:focus{outline:0;border-color:#69efd5;box-shadow:0 0 0 3px #34efba38}
+input[type=datetime-local]{color-scheme:dark}
+.hint{color:#e5fbff;background:linear-gradient(110deg,#28456e,#194c59);border-left:5px solid #70f5cb;border-radius:12px;padding:15px 17px;box-shadow:inset 0 1px 0 #ffffff14}
+.btn{background:linear-gradient(110deg,#63ebc6,#55c9ee);color:#0b2035;border-radius:12px;font-weight:900;border:1px solid #9ffce4;box-shadow:0 5px 16px #21d8bc28;transition:transform .16s,filter .16s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn.secondary{background:#383978;color:#eff0ff;border-color:#6a73bd}
+.btn.outline{background:#171f43;color:#b6f8e6;border:1px solid #60cfc1}
+.metric{background:linear-gradient(155deg,#343c78,#213451);border:1px solid #4e75a0;border-radius:17px;padding:19px;position:relative;overflow:hidden}
+.metric:before{content:'';position:absolute;inset:0 auto auto 0;width:100%;height:4px;background:linear-gradient(90deg,#7cf9cc,#5c95fb,#b393ff)}
+.metric span{font-size:13px;color:#cadcf7;font-weight:700}
+.metric strong{color:#76f5d4;font-size:clamp(19px,2.65vw,29px);letter-spacing:-.5px}
+.track{background:#0d1734;height:17px;border:1px solid #506083}
+.fill{background:linear-gradient(90deg,#37deb8,#70afff,#a68cfd);box-shadow:0 0 15px #56eeca66}
+.barrow{color:#e0eaff}
+.comparisonTable th,.comparisonTable td{border-bottom-color:#3e4a72}
+.comparisonTable thead{background:#2b3964;color:#f2fcff}
+.positive{color:#6ef5bc}.negative{color:#ffa59b}
+.sources a{color:#8beeff;text-decoration:underline;text-underline-offset:3px}
+footer{color:#b3bedb}
+.status{color:#8efbc8}
+#one>.card:first-child{border-top:4px solid #4ce9c1}
+#two>.card:first-child{border-top:4px solid #83a6ff}
+#three>.card:first-child{border-top:4px solid #c89cff}
+#sources>.card:first-child{border-top:4px solid #ffd38e}
+#one .card[style]{background:#1b3051!important;border:1px solid #4d618d}
+@media(max-width:750px){header{padding-top:38px;padding-bottom:45px}.tabs{position:relative}.tab{flex:1 1 44%;font-size:13px;padding:11px}.card{padding:19px}.wrap{padding:18px 12px 60px}}
+@media(max-width:460px){.tab{flex:1 1 100%}header h1{letter-spacing:-.7px}}
+@media print{
+ html,body{background:#fff!important;color:#171d20!important}
+ .report{color:#171d20!important;background:#fff!important}
+ .report h1,.report h2,.report h3,.report p{color:#171d20!important;text-shadow:none!important}
+ .report th{background:#eaf3f1!important;color:#171d20!important}
+ .report td{color:#171d20!important}
+}
+
+/* FRESH DAYLIGHT EDITION — overrides dark concert presentation only */
+:root{--bg:#f6faf6;--navy:#1b322c;--green:#15876d;--text:#182923;--border:#dceae2;--soft:#eaf7ef}
+html{color-scheme:light}
+body{background:linear-gradient(180deg,#f0faf4 0%,#f9fcf8 36%,#f8fbfa 100%);color:#192822}
+header{min-height:330px;display:flex;align-items:center;position:relative;padding-top:47px;padding-bottom:43px;border-bottom:1px solid #d6eade;background:radial-gradient(circle at 10% 15%,#f1ffdf,transparent 37%),linear-gradient(105deg,#e7f7eb,#e6faf4 56%,#e6f7fe);color:#182822;box-shadow:none}
+header:before,header:after{display:none}
+header .hero-copy{position:relative;z-index:2;max-width:640px;width:58%}
+header h1{color:#182c22;text-shadow:none;font-weight:900;letter-spacing:-1.5px;font-size:clamp(29px,3.6vw,45px);max-width:620px}
+header p{color:#216451;background:#fff9;border:1px solid #c7e6d4;border-radius:99px;font-size:13px;margin-top:15px}
+.eyebrow{display:inline-block;color:#238668;font-size:12px;font-weight:900;letter-spacing:1.1px;margin-bottom:12px}
+.hero-art{position:absolute;right:max(12px,calc((100vw - 1150px)/2));width:min(41vw,465px);top:50%;transform:translateY(-50%);filter:drop-shadow(0 15px 19px #6fae891c)}
+.hero-art svg{display:block;width:100%;height:auto}
+.wrap{max-width:1170px;padding-top:18px}
+.feature-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:5px 0 23px}
+.feature-strip>div{display:grid;grid-template-columns:45px 1fr;align-items:center;column-gap:10px;padding:15px 17px;background:#fff;border:1px solid #dfeee3;border-radius:16px;box-shadow:0 4px 18px #437b5710}
+.feature-strip span{grid-row:span 2;font-size:26px;background:#eff9ee;width:44px;height:44px;border-radius:13px;display:grid;place-items:center}
+.feature-strip b{color:#172e25;font-size:14px}.feature-strip small{color:#63756a;margin:0;font-size:12px}
+.tabs{background:#f8fcf8e8;backdrop-filter:blur(14px);border-bottom:1px solid #e6efe7}
+.tab{background:#fff;color:#38574b;border:1px solid #d5e7db;border-radius:12px;box-shadow:none}
+.tab:hover{background:#edf8ef;color:#224f40}
+.tab.active{background:#d7f3df;color:#135d46;border:1px solid #7ccaa8;box-shadow:0 3px 10px #41ab7220}
+.card{background:#fff;border:1px solid #dcebe1;border-radius:18px;box-shadow:0 9px 26px #355e4810;padding:24px;color:#182922}
+#teamCard{background:linear-gradient(115deg,#fff,#f0faef 70%,#e9f9f1);border:1px solid #cce6d4;box-shadow:0 8px 22px #4f937320}
+h2{color:#1b382b}h3{color:#23614c}.sub{color:#5b7267}.note,small{color:#64786c}label{color:#24382d}
+input{background:#fff;color:#15271c;border:1px solid #cbded1;border-radius:10px;min-height:43px;font-weight:500}
+input::placeholder{color:#83968a}
+input:focus{border-color:#4ba984;box-shadow:0 0 0 3px #7bce9a33}
+input[type=datetime-local]{color-scheme:light}
+.hint{background:#eef9f0;color:#254c39;border-left:4px solid #59b687;box-shadow:none}
+.btn{background:#188261;color:#fff;border:1px solid #188261;box-shadow:none}
+.btn:hover{filter:brightness(1.03);box-shadow:0 5px 12px #25855a26}
+.btn.secondary{background:#e8f6ec;color:#186c50;border:1px solid #c9e4d2}
+.btn.outline{background:#fff;color:#176950;border:1px solid #93c8ae}
+.metric{background:#f2faf5;border:1px solid #d8eadd;border-radius:14px}
+.metric:before{height:3px;background:linear-gradient(90deg,#5ac892,#a3db9d,#b0dce4)}
+.metric span{color:#5f7266}.metric strong{color:#136d51}
+.track{background:#e8f1e9;border:0}.fill{background:linear-gradient(90deg,#64bd8a,#92c7b5);box-shadow:none}
+.barrow{color:#203e2d}
+.comparisonTable th,.comparisonTable td{border-bottom-color:#e3ece5;color:#25382d}
+.comparisonTable thead{background:#eaf7ef;color:#234d3b}
+.positive{color:#13805b}.negative{color:#bc473b}
+.sources a{color:#147454}.status{color:#147750}footer{color:#728077}
+#one>.card:first-child{border-top:4px solid #6cc598}
+#two>.card:first-child{border-top:4px solid #87bdd4}
+#three>.card:first-child{border-top:4px solid #c2bbec}
+#sources>.card:first-child{border-top:4px solid #f0cd83}
+#one .card[style]{background:#f5faf6!important;border:1px solid #dce9df}
+@media(max-width:850px){header{min-height:290px}.hero-art{width:40vw;right:10px}.feature-strip{gap:8px}.feature-strip>div{padding:12px}.feature-strip b{font-size:12px}}
+@media(max-width:600px){header{display:block;min-height:0;padding:34px 20px 22px}header .hero-copy{width:100%}.hero-art{position:relative;top:auto;right:auto;transform:none;width:100%;max-width:420px;margin:15px auto 0}.feature-strip{grid-template-columns:1fr}.feature-strip>div{padding:10px 15px}.tabs{position:relative}.tab{flex:1 1 45%}}
+@media print{header,.feature-strip{display:none!important}html,body{background:#fff!important;color:#182922!important}.report,.report *{color:#171d20!important;text-shadow:none!important}.report h2{color:#171d20!important}}
+</style><style>
+/* Revised: illustration-free top and clearer field boundaries */
+header{min-height:unset!important;padding-top:36px!important;padding-bottom:36px!important;}
+header .hero-copy{width:100%!important;max-width:1100px!important;}
+.card{border:2px solid #a9c7b5!important;}
+#teamCard{border:2px solid #87b69b!important;}
+.feature-strip>div{border:2px solid #accbb8!important;}
+.tab{border:2px solid #aec6b6!important;}
+.tab.active{border:2px solid #4b9b74!important;}
+input, select, textarea{border:2px solid #91b7a0!important;}
+input:focus, select:focus, textarea:focus{border-color:#21835e!important;}
+.metric{border:2px solid #b1ceb9!important;}
+#one .card[style]{border:2px solid #afcbb7!important;}
+.track{border:1px solid #a6bdb0!important;}
+.comparisonTable th,.comparisonTable td{border-bottom:1px solid #b5c8ba!important;}
+@media print{.card{border:1px solid #9db7a5!important;}}
+</style><style>
+/* clear before/after storytelling */
+.comfort-box{padding:20px;margin:18px 0;border:2px solid #78ad97;border-radius:18px;background:#f7fcf8}
+.comfort-box h3{margin-top:0}.comfort-settings{margin:14px 0}
+.assessment-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
+.assessment{background:white;border:2px solid #a8c5b1;border-radius:16px;padding:16px}
+.assessment h4{margin:0 0 8px}.assessment .value{font-size:1.5rem;font-weight:800;color:#162d23}
+.status{padding:5px 10px;display:inline-block;border-radius:999px;font-weight:800;margin:5px 0}
+.status.ok{background:#d5f4db;color:#17532b}.status.bad{background:#ffe2d8;color:#842b18}.status.none{background:#ecf0ee;color:#43554e}
+.comfort-track{position:relative;display:flex;overflow:hidden;height:15px;border-radius:8px;background:#e6f3eb;margin:8px 0}
+.comfort-track .cold,.comfort-track .hot{flex:1;background:#c9e6fa}.comfort-track .good{flex:2;background:#a8e4ba}.comfort-track .hot{background:#f5ccb7}
+.assessment .help{color:#41564a;font-size:.87rem}
+.visual-compare{margin:18px 0;padding:20px;border:2px solid #91baa0;border-radius:20px;background:#f8fdf8}
+.viz-heading{font-size:1.12rem;font-weight:850;margin:0 0 15px;color:#182e23}
+.viz-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.viz-card{background:white;border:2px solid #b8d0be;border-radius:17px;padding:16px;min-width:0}
+.viz-card.after{border:3px solid #279b68;background:#f0fcf4}
+.viz-card .eyebrow{font-weight:750;font-size:.94rem;color:#425c4a}
+.viz-card .big-number{font-size:clamp(1.25rem,3.3vw,2.3rem);font-weight:900;color:#173629;overflow-wrap:anywhere;line-height:1.25;margin:6px 0}
+.viz-card .subnum{font-size:.8rem;color:#4c6357}
+.viz-strip{margin:18px 0 4px}.viz-row{display:grid;grid-template-columns:75px minmax(0,1fr) 88px;gap:8px;align-items:center;margin:12px 0;font-size:.94rem}
+.viz-rail{height:24px;border-radius:8px;background:#e7f1e9;overflow:hidden;border:1px solid #bfd3c5}.viz-rail>div{height:100%;min-width:0;transition:width .25s ease;border-radius:7px;background:#8ca6a0}.viz-row.after .viz-rail>div{background:#22a66d}.viz-row strong{text-align:right;color:#18382a}
+.viz-difference{background:#dcf5e4;color:#075b32;border:2px solid #71b18b;border-radius:14px;padding:14px;margin-top:16px;font-weight:850;font-size:1.15rem}
+.viz-difference.inc{background:#ffebe4;color:#963c23;border-color:#d9a08c}
+.viz-difference.neutral{background:#eef4ef;color:#43574a;border-color:#b3cbb9}
+@media(max-width:570px){.viz-cards{grid-template-columns:1fr}.viz-row{grid-template-columns:64px minmax(0,1fr) 65px}.visual-compare{padding:12px}}
+@media print{.visual-compare,.comfort-box{break-inside:avoid;background:white!important}.viz-card.after{background:white!important}.viz-rail>div{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style><style>
+.comfort-note{padding:17px 20px;margin:16px 0;border:2px solid #9bbba6;border-radius:16px;background:#f5faf6;color:#182b20}
+.comfort-note h3{font-size:1.03rem;margin:0 0 9px}.comfort-note p{line-height:1.65}
+.comfort-note .limits{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:12px 0}
+.comfort-note .limits>div{background:#fff;border:1.5px solid #b0c8b7;border-radius:12px;padding:11px 13px;display:flex;flex-direction:column;gap:4px}
+.comfort-note .limits span{font-size:.97rem}.comfort-note .limits small{color:#415548;line-height:1.55}
+@media print{.comfort-note{background:white!important;break-inside:avoid}}
+.comfort-one-line{padding:10px 13px;margin:12px 0;border:1.5px solid #9bbba6;border-radius:9px;background:#f5faf6;color:#263b2e;font-size:13px;line-height:1.5}
+@media print{.comfort-one-line{background:#fff!important}}
+
+<style>
+.fp-block{margin-top:18px}.fp-heading{margin:0 0 12px;font-size:1.03rem;color:#163a31}.fp-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.fp-card{border:2px solid #a8c9b8;border-radius:18px;background:#fbfefc;padding:16px;box-shadow:0 2px 10px #173a2a0a}.fp-card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}.fp-card-header b{font-size:1rem;color:#18382e}.fp-total{display:flex;flex-direction:column;align-items:flex-end}.fp-total span{font-size:12px;color:#557067}.fp-total strong{font-size:1.1rem;color:#0d6c52}.fp-layout{display:grid;grid-template-columns:210px 1fr;gap:16px;align-items:center}.fp-print{position:relative;width:185px;height:280px;margin:0 auto}.fp-toe{position:absolute;border-radius:50%;border:2px solid #2b7a63;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -4px 0 #00000010}.fp-toe.t1{width:44px;height:44px;left:26px;top:6px;background:#196d56}.fp-toe.t2{width:38px;height:38px;left:74px;top:3px;background:#2a896a}.fp-toe.t3{width:34px;height:34px;left:114px;top:18px;background:#399978}.fp-toe.t4{width:30px;height:30px;left:139px;top:47px;background:#4ba987}.fp-toe.t5{width:27px;height:27px;left:150px;top:80px;background:#63b797}.fp-sole{position:absolute;left:18px;top:58px;width:140px;height:214px;border:2px solid #2b7a63;border-radius:58% 42% 50% 46% / 32% 30% 54% 52%;overflow:hidden;background:#e4f3ea;transform:rotate(12deg)}.fp-segments{display:flex;flex-direction:column;height:100%}.fp-seg{position:relative;display:flex;align-items:center;justify-content:center;text-align:center;padding:4px 8px;color:#fff;font-weight:800;border-top:1.5px solid #ffffff88;font-size:13px;line-height:1.2}.fp-seg:first-child{border-top:none}.fp-seg small{display:block;color:#f4fffb;font-size:11px;margin-top:2px}.fp-seg.s1{background:#156b54}.fp-seg.s2{background:#2b8668}.fp-seg.s3{background:#43a37c}.fp-seg.s4{background:#74bd94}.fp-list{display:flex;flex-direction:column;gap:10px}.fp-row{border:1.5px solid #c8ddd1;border-radius:12px;padding:10px 12px;background:#fff}.fp-row-top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}.fp-row-top b{color:#15362c}.fp-row-top strong{color:#0d6c52;font-size:1rem}.fp-row small{display:block;color:#567067;margin-top:4px}.fp-row-bar{margin-top:6px;height:8px;border-radius:99px;background:#e4efea;overflow:hidden}.fp-row-bar span{display:block;height:100%;background:linear-gradient(90deg,#2f8868,#83c79e);border-radius:99px}.fp-note{margin-top:10px;font-size:12px;color:#59726a}.fp-diff{margin-bottom:10px;padding:10px 12px;border-radius:12px;border:1.5px solid #b2d0bf;background:#f2fbf5;color:#146547;font-weight:800}.fp-diff.bad{background:#fff0ea;border-color:#dfb2a1;color:#a14f2f}@media (max-width:980px){.fp-layout{grid-template-columns:1fr}.fp-pair{grid-template-columns:1fr}}@media print{.fp-card,.fp-row{break-inside:avoid;background:#fff!important}}
+</style><style>
+/* 단위 툴팁은 body 바로 아래의 최상위 레이어에 배치해 카드에 가려지지 않도록 합니다. */
+.unit-help{display:inline;cursor:help;text-decoration:underline dotted #548d75;text-underline-offset:3px;text-decoration-thickness:1px;color:inherit;border-radius:3px}
+.unit-help:focus-visible{outline:2px solid #21875f;outline-offset:3px}
+#unit-tooltip-top-layer{position:fixed;z-index:2147483647;max-width:min(290px,calc(100vw - 24px));width:max-content;box-sizing:border-box;background:#193c31;color:#fff;font-weight:500;font-size:13px;line-height:1.55;text-align:left;padding:10px 13px;border:1px solid #345d4e;border-radius:10px;box-shadow:0 10px 28px #132e2560;pointer-events:none;visibility:hidden;opacity:0;transition:opacity .1s}
+#unit-tooltip-top-layer.visible{visibility:visible;opacity:1}
+@media print{.unit-help{text-decoration:none}#unit-tooltip-top-layer{display:none!important}}
+</style><style>/* 1차시 기본 예시값/학생 입력값 구분 */
+#fields-one input.example-value,#fields-new input.example-value{color:#cf2935!important;-webkit-text-fill-color:#cf2935;}#fields-old input.read-only-value{background:#f0f6f1!important;border-color:#c0d5c6!important;color:#304a3a!important;opacity:1;cursor:default;}
+#fields-one input.student-value{color:#182923!important;-webkit-text-fill-color:#182923;}
+
+
+/* 2026-11 학생용 사이드바 및 상단 제목 */
+html.gc-authenticated body>header{padding:22px max(20px,calc((100vw - 1450px)/2))!important}
+html.gc-authenticated body>header .hero-copy{max-width:1450px;margin:auto}
+html.gc-authenticated body>header h1{font-size:clamp(21px,3.0vw,39px)!important;letter-spacing:-.045em;white-space:nowrap;line-height:1.3}
+html.gc-authenticated body>header p{font-size:16px;font-weight:750}
+.wrap{max-width:1480px!important}
+.gc-workspace{display:grid;grid-template-columns:238px minmax(0,1fr);gap:22px;align-items:start}
+.gc-workspace>.tabs{display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;gap:9px;position:sticky;top:16px;grid-column:1;grid-row:1;padding:13px;border:2px solid #a7cbb7;border-radius:18px;background:#f4faf6;margin:0;box-shadow:0 5px 22px #215b3710}
+.gc-workspace>.tabs:before{content:'수업 메뉴';display:block;font-size:13px;color:#3c6652;font-weight:900;padding:7px 9px 10px}
+.gc-workspace>.tabs .tab{width:100%;text-align:left;border-radius:12px;padding:15px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:5px;line-height:1.25}
+.gc-workspace>.tabs .tab-main{font-weight:900;font-size:16px}
+.gc-workspace>.tabs .tab-desc{font-weight:500;font-size:12px;opacity:.85}
+.gc-workspace>.panel{grid-column:2;grid-row:1;min-width:0}
+@media (max-width:850px){.gc-workspace{grid-template-columns:1fr;gap:14px}.gc-workspace>.tabs{grid-column:1;grid-row:1;position:static;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.gc-workspace>.tabs:before{grid-column:1/-1}.gc-workspace>.panel{grid-column:1;grid-row:2}html.gc-authenticated body>header h1{font-size:clamp(15px,3.2vw,30px)!important}}
+@media (max-width:480px){.gc-workspace>.tabs .tab{padding:10px 9px}.gc-workspace>.tabs .tab-main{font-size:13px}.gc-workspace>.tabs .tab-desc{font-size:11px}html.gc-authenticated body>header h1{font-size:clamp(12px,3.1vw,17px)!important;letter-spacing:-.07em}}
+@media print{.gc-workspace{display:block}.gc-workspace>.tabs{display:none!important}.gc-workspace>.panel{display:block}}
+</style><style>
+html:not(.gc-authenticated) body>header,html:not(.gc-authenticated) main,html:not(.gc-authenticated) #printReport{display:none!important}
+html.gc-authenticated #gcLanding{display:none!important}
+#gcLanding{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 16px;background:radial-gradient(circle at 10% 10%,#dbf7e4,transparent 36%),radial-gradient(circle at 92% 90%,#e3f7ed,transparent 35%),#f7fbf8;color:#182c25}
+.gc-login-card{max-width:470px;width:100%;background:white;border:2px solid #a6cbb4;border-radius:24px;box-shadow:0 20px 60px #28564018;padding:32px}
+.gc-login-card h1{font-size:clamp(23px,4vw,30px);line-height:1.35;margin:10px 0 8px;color:#174b38}
+.gc-login-card .gc-sub{font-size:14px;color:#53685b;margin:0 0 22px}
+.gc-auth-tabs{display:grid;grid-template-columns:1fr 1fr;padding:4px;background:#eaf5ed;border-radius:12px;margin-bottom:22px;gap:4px}
+.gc-auth-tabs button{border:0;border-radius:9px;padding:12px;font-weight:800;background:transparent;color:#436154;cursor:pointer}
+.gc-auth-tabs button[aria-selected=true]{background:#fff;color:#137454;box-shadow:0 2px 8px #183c2720}
+.gc-auth-form{display:grid;gap:13px}.gc-auth-form[hidden]{display:none!important}
+.gc-auth-form label{display:grid;gap:6px;font-size:14px;font-weight:800}.gc-auth-form input{border:2px solid #a5c8b5;padding:12px 14px;border-radius:10px;font-size:16px}
+.gc-auth-form button[type=submit]{margin-top:5px;background:#16815d;color:#fff;border:0;border-radius:10px;padding:14px;font-weight:800;cursor:pointer}
+#gcAuthError{min-height:24px;color:#ad3434;font-size:13px;font-weight:700;margin:8px 0}
+.gc-auth-info{margin-top:17px;border-radius:12px;padding:13px 15px;background:#f2f8f4;font-size:12px;color:#506c59;line-height:1.6}
+#gcAccountBar{max-width:1100px;margin:14px auto 0;padding:10px 17px;background:#eef8f1;border:1.5px solid #9cbfac;border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;color:#234733}
+#gcAccountBar button{border:1px solid #7fae91;border-radius:8px;background:#fff;padding:8px 14px;font-weight:800;cursor:pointer}
+@media print{#gcLanding,#gcAccountBar{display:none!important}}
+</style>
+<style id="chat-style-sidebar">
+:root {--gc-side-width:276px;--gc-side-mini:76px}
+html.gc-authenticated body {background:#fbfcfb}
+html.gc-authenticated body>header,
+html.gc-authenticated body>main.wrap {
+  margin-left:var(--gc-side-width)!important;
+  transition:margin-left .22s ease;
+}
+html.gc-authenticated body>header {
+  padding:30px 34px!important;
+  background:linear-gradient(110deg,#f1faea,#e6f8f0)!important;
+  color:#172b20!important;
+  border-bottom:1px solid #d7eadb;
+}
+html.gc-authenticated body>header .hero-copy {max-width:100%!important}
+html.gc-authenticated body>header h1 {
+  color:#172b20!important;
+  font-size:clamp(19px,2.35vw,36px)!important;
+  white-space:nowrap!important;
+  line-height:1.24!important;
+}
+html.gc-authenticated body>header p {color:#35614b!important}
+html.gc-authenticated body>main.wrap {max-width:none!important;width:auto!important;padding:24px 26px 60px!important}
+.gc-workspace {display:block!important;min-width:0}
+.gc-workspace>.panel {display:none;min-width:0}
+.gc-workspace>.panel.active {display:block}
+.gc-workspace>.tabs {
+  position:fixed!important; top:0!important; left:0!important; bottom:0!important;
+  width:var(--gc-side-width)!important; height:100dvh!important;
+  z-index:500!important; grid-column:auto!important; grid-row:auto!important;
+  display:flex!important; flex-direction:column!important;
+  flex-wrap:nowrap!important; align-items:stretch!important;
+  padding:15px 13px 14px!important; margin:0!important; gap:4px!important;
+  background:#f5f7f5!important; border:0!important; border-right:1px solid #e0e7e1!important;
+  border-radius:0!important; box-shadow:none!important; backdrop-filter:none!important;
+  overflow-y:auto!important; overflow-x:hidden!important;
+  transition:width .22s ease;
+}
+.gc-workspace>.tabs:before {display:none!important}
+.gc-side-top {display:flex;align-items:center;justify-content:space-between;gap:8px;padding:3px 4px 17px}
+.gc-side-name {display:flex;align-items:center;gap:10px;min-width:0;font-weight:850;color:#1d3228;font-size:17px}
+.gc-side-logo {width:35px;height:35px;border-radius:11px;background:#d8efdd;display:grid;place-items:center;font-size:19px;flex:none}
+.gc-side-brand {overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gc-side-toggle {background:transparent;border:0;border-radius:9px;padding:8px;display:grid;place-items:center;color:#3b5447;flex:none}
+.gc-side-toggle:hover,.gc-workspace>.tabs .tab:hover{background:#e6ede7!important}
+.gc-side-group {font-size:12px;color:#66776b;font-weight:750;margin:12px 10px 9px;letter-spacing:.02em}
+.gc-workspace>.tabs .tab {
+  width:100%!important; min-height:48px; text-align:left!important;
+  display:flex!important; flex-direction:row!important; align-items:center!important;
+  padding:12px 11px!important;gap:12px!important;
+  background:transparent!important;border:0!important; border-radius:11px!important;
+  color:#24372d!important; box-shadow:none!important; line-height:1.25!important;
+  cursor:pointer;
+}
+.gc-workspace>.tabs .tab.active {background:#dcefe2!important;color:#126244!important}
+.gc-workspace>.tabs .tab-main {font-size:14px!important;font-weight:750!important}
+.gc-workspace>.tabs .tab-desc {display:none!important}
+.gc-nav-icon {display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;flex:none;font-size:19px}
+.gc-side-spacer {flex:1 1 auto;min-height:20px}
+.gc-side-footer {border-top:1px solid #dce5df;margin-top:8px;padding:14px 4px 4px}
+.gc-account-inner {display:flex;align-items:center;gap:10px;min-width:0}
+.gc-avatar {display:grid;place-items:center;width:35px;height:35px;border-radius:50%;background:#178467;color:#fff;font-weight:850;flex:none}
+.gc-account-text {min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.gc-account-text strong {overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;color:#1b3628}
+.gc-account-text small {font-size:11px;color:#648173;margin-top:3px}
+#gcAccountBar {
+  display:flex!important;flex-direction:column!important;gap:13px!important;align-items:stretch!important;
+  width:100%!important;max-width:none!important;margin:0!important;padding:0!important;
+  background:transparent!important;border:0!important;border-radius:0!important;
+}
+#gcAccountBar>button {
+  width:100%;text-align:left;border:0!important;background:transparent!important;
+  border-radius:9px;padding:9px 11px!important;font-size:13px;color:#4e6355!important
+}
+#gcAccountBar>button:hover {background:#e7eee8!important}
+#gcAccountBar .gc-old-account-text{display:none}
+.gc-side-mobile-toggle {display:none}
+.gc-sidebar-backdrop {display:none}
+html.gc-sidebar-collapsed.gc-authenticated body>header,
+html.gc-sidebar-collapsed.gc-authenticated body>main.wrap {margin-left:var(--gc-side-mini)!important}
+html.gc-sidebar-collapsed .gc-workspace>.tabs {width:var(--gc-side-mini)!important}
+html.gc-sidebar-collapsed .gc-side-brand,
+html.gc-sidebar-collapsed .gc-side-group,
+html.gc-sidebar-collapsed .gc-workspace>.tabs .tab-main,
+html.gc-sidebar-collapsed .gc-account-text,
+html.gc-sidebar-collapsed #gcAccountBar>button {display:none!important}
+html.gc-sidebar-collapsed .gc-workspace>.tabs .tab{justify-content:center!important;padding:11px!important}
+html.gc-sidebar-collapsed .gc-side-top{flex-direction:column;gap:4px}
+html.gc-sidebar-collapsed .gc-side-footer{display:flex;justify-content:center}
+@media(max-width:850px){
+ html.gc-authenticated body>header,html.gc-authenticated body>main.wrap,
+ html.gc-sidebar-collapsed.gc-authenticated body>header,html.gc-sidebar-collapsed.gc-authenticated body>main.wrap {margin-left:0!important}
+ html.gc-authenticated body>header{padding:19px 16px 19px 60px!important}
+ html.gc-authenticated body>main.wrap {padding:18px 13px 40px!important}
+ html.gc-authenticated body>header h1 {font-size:clamp(15px,3vw,24px)!important;overflow-x:auto}
+ .gc-side-mobile-toggle{
+  display:grid;place-items:center;position:fixed;top:13px;left:12px;
+  z-index:490;width:39px;height:39px;background:#f5faf6;border:1px solid #b8cebf;
+  border-radius:11px;color:#173d2b;font-size:23px
+ }
+ .gc-workspace>.tabs,html.gc-sidebar-collapsed .gc-workspace>.tabs {
+  width:min(290px,86vw)!important;transform:translateX(-105%)!important;
+  transition:transform .22s ease!important;
+ }
+ html.gc-mobile-open .gc-workspace>.tabs {transform:translateX(0)!important}
+ html.gc-mobile-open .gc-sidebar-backdrop {
+  display:block;position:fixed;inset:0;z-index:480;background:#17281a73
+ }
+ html.gc-sidebar-collapsed .gc-side-brand,
+ html.gc-sidebar-collapsed .gc-side-group,
+ html.gc-sidebar-collapsed .gc-workspace>.tabs .tab-main,
+ html.gc-sidebar-collapsed .gc-account-text,
+ html.gc-sidebar-collapsed #gcAccountBar>button{display:initial!important}
+ html.gc-sidebar-collapsed .gc-side-top{flex-direction:row}
+ html.gc-sidebar-collapsed .gc-workspace>.tabs .tab {justify-content:flex-start!important}
+ html.gc-sidebar-collapsed .gc-side-footer{display:block}
+}
+@media print{
+ html.gc-authenticated body>header,html.gc-authenticated body>main.wrap {margin-left:0!important}
+ .gc-workspace>.tabs,.gc-side-mobile-toggle,.gc-sidebar-backdrop{display:none!important}
+}
+</style>
+
+<style id="gc-team-ux">
+.gc-header-actions{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:10px;flex-wrap:wrap}
+.gc-header-actions p{margin:0!important;flex:1 1 auto}
+.gc-header-actions #savePdf{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  background:#197655!important;color:white!important;
+  border:1px solid #126747!important;border-radius:12px!important;
+  padding:12px 17px!important;font-weight:850;white-space:nowrap;
+  box-shadow:0 3px 9px #1a654122;flex-shrink:0
+}
+.gc-header-actions #savePdf:hover{background:#115e43!important}
+.gc-workspace #teamCard{margin:0!important;background:#fff!important;border:2px solid #a7cbb7!important;
+ box-shadow:0 5px 16px #2b623411!important;position:static!important;z-index:auto!important}
+.gc-workspace #teamCard h2{color:#17392c!important}
+.gc-workspace #teamCard .sub,.gc-workspace #teamCard .note{color:#526e5d!important}
+.gc-workspace #teamCard label{color:#1e3929!important}
+.gc-workspace #teamCard input{background:#fff!important;color:#172c20!important}
+.gc-workspace #teamCard .toolbar{margin-top:22px}
+@media(max-width:850px){
+ .gc-header-actions{align-items:flex-start}
+ .gc-header-actions #savePdf{padding:10px 12px!important;font-size:13px}
+}
+@media print{
+ .gc-header-actions #savePdf{display:none!important}
+ #team{display:none!important}
+}
+</style>
+<style id="extra-measure-style">
+.extra-measures{margin:20px 0 6px;padding:17px;background:#f7fbf8;border:2px solid #afcbbb;border-radius:15px}
+.extra-measures-head{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:12px}
+.extra-measures-head h3{margin:0 0 6px;font-size:1.05rem;color:#173c2e}
+.extra-measures-head .sub{margin:0}
+.extra-measure-rows{display:flex;flex-direction:column;gap:12px}
+.extra-measure-row{background:white;border:2px solid #9fbeaa;border-radius:12px;padding:14px}
+.extra-measure-row-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.extra-measure-row-top strong{font-size:14px;color:#1a4330}
+.extra-measure-delete{border:1px solid #c9aaa8;color:#9b3737;background:#fff7f7;border-radius:8px;padding:7px 11px;cursor:pointer;font-weight:750}
+.extra-measure-delete:hover{background:#ffe8e8}
+.extra-measure-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.extra-measure-grid .field{min-width:0}
+.extra-measure-grid label{line-height:1.35}
+.extra-measure-grid input{box-sizing:border-box}
+.extra-measure-empty{font-size:13px;color:#536d5e;padding:12px;border:1px dashed #b8cebe;border-radius:9px;background:#fff}
+@media(max-width:680px){.extra-measure-grid{grid-template-columns:1fr}}
+@media print{.extra-measures{display:none!important}}
+</style><style id="gc-temperature-sim-css">
+.gc-scenario-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.gc-scenario-grid .field{min-width:0}
+.gc-scenario-grid input,.gc-scenario-grid select{width:100%;border:2px solid #99bba6;border-radius:8px;padding:10px;color:#183729;background:#fff;font-size:15px;box-sizing:border-box}
+.gc-scenario-grid input[readonly]{background:#edf5ef;color:#2c5640}
+.gc-model-results{margin-top:15px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gc-result-tile{border:2px solid #abd2b6;border-radius:12px;padding:15px;background:#f7fcf8}
+.gc-result-tile b{display:block;font-size:13px;color:#3d5948}
+.gc-result-tile strong{display:block;font-size:clamp(17px,2.3vw,27px);margin-top:8px;color:#127248;overflow-wrap:anywhere}
+.gc-result-tile small{display:block;color:#527363;line-height:1.5;margin-top:7px}
+.gc-model-note{grid-column:1/-1;border-left:4px solid #299268;background:#f0faf3;padding:13px;border-radius:8px;color:#264436}
+@media(max-width:800px){.gc-scenario-grid,.gc-model-results{grid-template-columns:1fr}}
+@media print{#environmentModelCard{break-inside:avoid}.gc-result-tile{background:#fff!important}}
+</style><style id="gc-multiple-equip-style">
+.equipment-editor{margin:16px 0 18px;background:#fbfefa;border:2px solid #9dbfaa;border-radius:16px;padding:16px}
+.gc-equip-category{border:1.5px solid #b3cfbd;background:#fff;border-radius:12px;padding:13px;margin:12px 0}
+.gc-equip-cat-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+.gc-equip-cat-head strong{font-size:15px;color:#174b32}
+.gc-equip-table{width:100%;border-collapse:collapse;table-layout:fixed}
+.gc-equip-table th{background:#f0f8f1;font-size:12px;color:#375e47;text-align:left}
+.gc-equip-table th,.gc-equip-table td{border:1.5px solid #bfd3c5;padding:8px;vertical-align:middle}
+.gc-equip-table td input{min-width:0;width:100%;font-size:14px;padding:8px;background:white}
+.gc-equip-table td input.gc-example{color:#cc2735;font-weight:800}
+.gc-equip-table td input.gc-written{color:#16261d;font-weight:800}
+.gc-equip-table td input:disabled{background:#edf3ed;color:#506454}
+.gc-equip-table .gc-delete{border:1px solid #d9b7b3;background:#fff7f5;color:#a04538;border-radius:7px;padding:7px 10px;cursor:pointer}
+.gc-equip-table .gc-delete-inline{display:block;margin-top:6px;padding:4px 7px;font-size:11px}.gc-equip-add{border:1px solid #a5cab2;border-radius:8px;padding:8px 11px;background:#e4f4e9;color:#175b38;font-weight:800;cursor:pointer}
+.gc-equip-total{margin-top:9px;color:#18633e;font-size:13px;font-weight:750}
+.gc-location-table{width:100%;border-collapse:collapse;min-width:650px}
+.gc-location-table th,.gc-location-table td{border:1.5px solid #b3cdb9;padding:9px;text-align:left}
+.gc-location-table th{font-size:13px;background:#eef8f0}
+.gc-location-table input{max-width:125px}
+.gc-location-wrap{overflow-x:auto;margin:12px 0}
+.gc-model-mini{background:#f0f9f2;border:1.5px solid #b1d3b9;border-radius:10px;margin-top:10px;padding:12px;color:#1b5a35}
+@media(max-width:640px){.equipment-editor{padding:10px}.gc-equip-table th,.gc-equip-table td{padding:5px}.gc-equip-table td input{padding:6px}.gc-equip-category{padding:8px}}
+@media print{.gc-equip-add,.gc-delete{display:none!important}.gc-equip-category,.gc-model-mini{break-inside:avoid}}
+</style><style>#environmentModelCard{display:none!important}</style>
+<style id="collab-layout-overrides">
+/* Screen uses 90% content scale, while scrolling is owned by the lesson document. */
+html{scrollbar-gutter:stable;}
+body{zoom:.90;min-height:112vh;}
+html.gc-authenticated body>header{padding:21px 26px!important;min-height:0!important}
+html.gc-authenticated body>header h1{font-size:clamp(21px,2.75vw,38px)!important;max-width:none!important;white-space:nowrap!important;letter-spacing:-.9px!important}
+html.gc-authenticated body>header .hero-copy{width:100%!important;max-width:none!important;}
+html.gc-authenticated body>main.wrap{padding:20px 28px 70px!important;}
+.gc-workspace>.tabs{height:112.12vh!important;overscroll-behavior:contain;}
+.gc-side-footer{margin-top:auto!important;position:sticky!important;bottom:0!important;background:#f5f7f5!important;padding-bottom:10px!important;z-index:5}
+
+.gc-collab-box{padding:20px;background:white;border:2px solid #b5d2bf;border-radius:16px;margin-bottom:18px}
+.gc-collab-actions{display:flex;gap:9px;flex-wrap:wrap;margin:13px 0}
+.gc-collab-actions button{padding:10px 13px;border-radius:10px;border:1px solid #91baa0;background:#e9f8ec;color:#18593d;font-weight:700;cursor:pointer}
+.gc-collab-actions button.primary{background:#187c58;color:white}
+.gc-collab-box input,.gc-collab-box select{width:100%;padding:9px 12px;margin:4px 0 10px;border:1.5px solid #a8cab4;border-radius:9px;background:white;color:#162b21}
+.gc-collab-member{display:flex;gap:9px;align-items:center;padding:6px 0}
+.gc-collab-member input{width:18px;height:18px;margin:0}
+.gc-collab-note{font-size:13px;color:#536b5b;line-height:1.65}
+.gc-collab-pill{padding:5px 10px;border-radius:10px;background:#e8f6ec;color:#146344;font-size:12px}
+.gc-collab-alert{color:#9b3c27;background:#fff3e9;padding:10px;border-radius:8px}
+@media(max-width:900px){html.gc-authenticated body>header h1{font-size:clamp(16px,2.9vw,28px)!important}}
+@media print{body{zoom:1!important}.gc-collab-box{display:none!important}}
+</style>
+
+<style id="gc-dark-shell">
+@media (prefers-color-scheme: dark){
+ .gc-workspace>.tabs{background:#1d2621!important;border-right:1px solid #42544a!important}
+ .gc-side-top,.gc-side-name,.gc-side-brand,.gc-side-group{color:#e2f0e7!important}
+ .gc-side-logo{background:#314f3e!important}
+ .gc-side-toggle{color:#e2f0e7!important}
+ .gc-workspace>.tabs .tab{color:#e2efe5!important}
+ .gc-workspace>.tabs .tab:hover{background:#35483a!important}
+ .gc-workspace>.tabs .tab.active{background:#275e48!important;color:#f4fff8!important}
+ .gc-side-footer{background:#1d2621!important;border-top:1px solid #405246!important}
+ .gc-account-text strong,.gc-account-text small,#gcAccountBar>button{color:#e2efe5!important}
+ }
+@media(max-width:600px){html.gc-authenticated body>header h1{font-size:clamp(13px,2.6vw,19px)!important}}
+</style>
+</head><body><header><div class="hero-copy"><span class="eyebrow">Econnect: 김규민, 이호진, 김주현</span><h1>🌿 모두를 위한 학교 콘서트장 만들기</h1><div class="gc-header-actions"><p>우리는 학교 축제 콘서트장 기획단!</p><button class="btn" id="savePdf" type="button">📄 PDF로 저장 / 인쇄</button></div></div></header><div id="gcAccountBar"><div class="gc-account-inner"><span class="gc-avatar" aria-hidden="true">👤</span><span class="gc-account-text"><strong id="gcCurrentAccount"></strong><small>계정별 자동 저장 중</small></span></div><button type="button" onclick="gcLogOut()">↪ 로그아웃</button></div><script>document.getElementById('gcCurrentAccount').textContent=window.gcUser||'';</script><main class="wrap">
+<div class="gc-workspace"><div class="tabs" role="tablist"><button class="tab active" type="button" data-tab="collab"><span class="tab-main">모둠 협업</span><span class="tab-desc">모둠 생성 · 공동 작업</span></button><button class="tab" data-tab="one"><span class="tab-main">환경 1차시</span><span class="tab-desc">운영 조건 실험</span></button><button class="tab" data-tab="two"><span class="tab-main">환경 2차시</span><span class="tab-desc">친환경 설계 비교</span></button><button class="tab" data-tab="three"><span class="tab-main">기술·가정</span><span class="tab-desc">친환경 장치 비교</span></button><button class="tab" data-tab="sources"><span class="tab-main">계산 원리와 자료 출처</span><span class="tab-desc">계산식 · 근거 자료</span></button></div>
+<section class="panel active" id="collab"><div class="gc-collab-box"><h2>👥 모둠 협업</h2><p class="gc-collab-note">회원 목록에서 초대할 학생을 선택하여 모둠을 만듭니다. 초대받은 학생이 수락하면 같은 기록을 함께 편집할 수 있습니다.</p><div id="gcCollabMain">불러오는 중...</div><div id="gcCollabMessage" role="status" aria-live="polite"></div></div></section>
+<div id="teamCard" hidden><input id="teamName"><input id="teamMembers"><span id="saveStatus"></span></div>
+<section class="panel" id="one"><div class="card"><h2>1차시 | 콘서트장의 에너지 사용량은 얼마나 될까?</h2><p class="sub">강당 현장 조사 결과를 바탕으로 운영 조건을 입력하고, 조건을 하나씩 바꾸어 결과를 비교해 보세요.</p><div class="hint">🔎 <b>탐구 방법:</b> 강당에서 조사한 운영 조건을 입력하고 조명 수, 공연 시간 등을 하나씩 바꾸며 에너지 사용량과 탄소배출량의 변화를 살펴보세요. 입력 내용은 자동 저장되며 환경 2차시에 연동됩니다.</div><div class="card" style="padding:16px;background:#f7fbfa"><h3>🌡️ 강당 현장 측정: 온도계 · 조도계</h3><p class="sub">온도계로 실내 온도를 측정하고, 조도계로 무대 중앙의 표면 조도를 측정해 기록하세요. 측정 전·후 조명 방향과 조도계 위치를 동일하게 유지하세요. 조도(lx)와 실내 온도(°C)는 소비전력을 직접 뜻하지 않습니다. 2차시에서 측정 온도를 바탕으로 목표 온도 조정에 필요한 에너지를 가정하여 실험합니다.</p><div class="measure-table"><div class="field"><label for="measurementPlace">측정 위치</label><input id="measurementPlace" placeholder="예: 무대 중앙" type="text"/></div><div class="field"><label for="measurementTime">측정 일시 · 한국표준시(KST)</label><input id="measurementTime" type="datetime-local" readonly aria-readonly="true"/><small>측정값을 입력하면 자동으로 기록됩니다. (UTC+9)</small></div><div class="field"><label for="temperature">현재 실내 온도 (°C)</label><input id="temperature" placeholder="예: 24.5" step="0.1" type="number" min="0" max="40"/><small>온도계를 사람이 머무는 높이에서 측정</small></div><div class="field"><label for="illuminance">변경 전 무대 조도 (lx)</label><input id="illuminance" placeholder="예: 320" step="0.1" type="number" min="0" max="2000"/><small>무대 중앙의 같은 지점에서 측정</small></div><div class="field"><label for="temperatureAfter">변경 후 실내 온도 (°C)</label><input id="temperatureAfter" placeholder="예: 23" step="0.1" type="number" min="0" max="40"/><small>동일한 무대 위치와 측정 조건에서 비교</small></div><div class="field"><label for="illuminanceAfter">변경 후 무대 조도 (lx)</label><input id="illuminanceAfter" placeholder="예: 310" step="0.1" type="number" min="0" max="2000"/><small>동일한 무대 위치와 측정 조건에서 비교</small></div></div><div class="extra-measures"><div class="extra-measures-head"><div><h3>📍 위치별 추가 측정 기록</h3><p class="sub">측정 위치마다 기록칸을 추가할 수 있습니다. 전·후 측정은 같은 위치에서 진행하세요.</p></div><button type="button" class="btn secondary" id="addMeasureRow">＋ 측정 위치 추가</button></div><div id="extraMeasureRows" class="extra-measure-rows" aria-live="polite"></div><p class="note">온도는 0~40°C, 조도는 0~2,000 lx만 입력할 수 있습니다. 위치별 데이터는 로그인 계정에 자동 저장됩니다.</p></div><div hidden aria-hidden="true"><input id="tempMin" value="0"><input id="tempMax" value="40"><input id="luxMin" value="0"><input id="luxMax" value="2000"></div><div class="hint">기록한 온도와 무대 조도는 2차시 친환경 설계 비교로 연동됩니다. 냉난방에 필요한 추가 전력은 면적·온도차·가정한 열용량·효율을 이용한 단순 추정치이며, 실제 계량값이 아닙니다. 무대 조도가 같더라도 전력 사용량은 달라질 수 있습니다. 관객석은 암전하더라도 이동 통로·출입구·피난 조명의 안전은 별도로 확인하세요.</div></div><p class="note" style="margin:10px 0 12px"><span style="color:#cf2935;font-weight:800">● 빨간 숫자: 기본 예시값</span>　<span style="color:#182923;font-weight:800">● 검은 숫자: 학생이 수정한 값</span></p><div id="fields-one"></div><div class="equipment-editor" id="firstEquipment"><h3>🔌 장비 종류별 세부 운영 조건</h3><p class="sub">조명·음향·냉난방·기타 장비를 종류마다 여러 줄 추가해 기록하세요. 개수와 소비전력의 합산 결과가 2차시로 자동 연결됩니다.</p><div id="gcEquipmentOne"></div></div><div class="actions"><button class="btn outline" id="resetOne">예시값으로 초기화</button></div></div><div class="card"><h3>현재 운영 조건의 분석 결과</h3><div class="metrics" id="metrics-one"></div><div class="bars" id="bars-one"></div><div id="footprint-one" class="fp-block"></div></div></section>
+<section class="panel" id="two"><div class="card"><h2>2차시 | 친환경 설계 전·후 비교</h2><p class="sub">환경 1차시에 입력한 운영 조건과 위치별 온도·조도 측정값이 자동으로 연동됩니다. 기존 콘서트장 입력란은 이 화면에서 변경할 수 없습니다. 친환경 설계안의 빨간 숫자는 제공된 예시값이며, 수정하면 검은색으로 바뀝니다. 실제 설계 도면과 기후행동 계획은 별도 활동지에 작성합니다.</p><div class="actions"><button class="btn secondary" id="copyExisting">기존 설계 → 개선 설계 복사</button></div></div><div class="compare"><div class="card"><h3>🏫 기존 콘서트장</h3><div id="fields-old"></div></div><div class="card"><h3>🌱 친환경 설계안</h3><div id="fields-new"></div><div class="equipment-editor"><h3>🔧 장비별 개선 조건</h3><p class="sub">1차시에 기록한 모든 장비가 자동으로 표시됩니다. 개수와 소비전력을 각각 바꾸어 개선안을 실험하세요. 빨간 숫자는 제공된 값이며, 수정하면 검은색으로 바뀝니다.</p><div id="gcEquipmentNew"></div></div></div></div><div class="card" id="gcAllLocationsCard"><h3>📍 위치별 온도·조도 개선 비교</h3><p class="sub">1차시에서 기록한 모든 위치가 나타납니다. 위치별 목표 온도와 목표 조도를 입력해 보세요. 온도 조정에 필요한 전기는 강당 면적을 측정 위치 수로 나눈 단순 교육용 모형으로 추정합니다.</p><div id="gcAllLocationsRows"></div><div id="gcAllLocationsSummary" class="gc-model-results" aria-live="polite"></div><p class="note">측정 위치를 똑같은 면적의 구역으로 가정한 예시 모델입니다. 실제 공조 구역과 같지 않으며, 위치별 추정 전력량은 기존 냉난방 사용량과 중복될 수 있어 기존 에너지 계산표에 자동으로 합산하지 않습니다. 조도는 전기 사용량으로 직접 환산하지 않습니다.</p></div><div class="card" id="environmentModelCard"><h3>🌡️ 1차시 측정값으로 냉난방·무대 조도 실험</h3>
+<p class="sub">1차시에서 측정한 위치를 선택하고 목표 실내 온도를 설정하세요. 예를 들어 측정 온도가 29°C일 때 25°C로 낮추는 데 필요한 <b>추가 전력량</b>을 추정할 수 있습니다. 관객석 암전과 출입구·피난 조명의 안전은 별도로 판단합니다.</p>
+<div class="data-grid gc-scenario-grid">
+<div class="field"><label for="gcTempLocation">1차시 측정 위치 선택</label><select id="gcTempLocation"><option value="main">첫 번째 측정 위치</option></select><small>1차시 기록과 자동 연동</small></div>
+<div class="field"><label for="gcObservedTemp">실측 실내 온도 (°C)</label><input id="gcObservedTemp" type="text" readonly placeholder="1차시에서 측정"/></div>
+<div class="field"><label for="gcObservedLux">실측 무대 조도 (lx)</label><input id="gcObservedLux" type="text" readonly placeholder="1차시에서 측정"/></div>
+<div class="field"><label for="gcSetpoint">목표 실내 온도 (°C)</label><input id="gcSetpoint" type="number" min="0" max="40" step="0.5" value="25"/><small>학생이 조정하는 설정값</small></div>
+<div class="field"><label for="gcThermalFactor">열용량 가정 (kWhₜₕ/㎡·°C)</label><input id="gcThermalFactor" type="number" min="0.001" max="0.1" step="0.001" value="0.015"/><small>수업용 예시값 · 건물의 열적 특성을 단순화</small></div>
+<div class="field"><label for="gcCop">냉난방 효율 (COP)</label><input id="gcCop" type="number" min="1" max="10" step="0.1" value="3"/><small>전기 1kWh당 이동하는 열에너지의 비율</small></div>
+<div class="field"><label for="gcTargetLux">목표 무대 조도 (lx)</label><input id="gcTargetLux" type="number" min="0" max="2000" step="1" value="350"/><small>밝기 비교에만 사용하며 전력으로 환산하지 않음</small></div>
+</div>
+<div class="gc-model-results" id="gcModelResults" aria-live="polite"></div>
+<p class="note">※ 추정식: 추가 전력량(kWh) = 강당 면적(㎡) × 열용량 가정(kWhₜₕ/㎡·°C) × |현재 온도 − 목표 온도|(°C) ÷ COP. 이는 최초 온도 조정에 필요한 <b>추가 에너지의 교육용 모형</b>입니다. 외기 온도, 단열, 일사량, 인원, 환기, 냉난방 가동시간과 제어 방식 등은 반영하지 않습니다. 1차시의 기본 냉난방 소비전력과 실제로 중복될 수 있어 별도로 구분합니다.</p>
+</div>
+<div class="card"><h3>설계 변경 전·후의 비교 결과</h3><div class="metrics" id="metrics-two"></div><div style="overflow-x:auto"><table class="comparisonTable"><thead><tr><th>항목</th><th>기존</th><th>개선</th><th>감소량</th></tr></thead><tbody id="comparisonRows"></tbody></table></div><div class="bars" id="compareBars"></div><div class="visual-compare" id="designVisual"></div><div id="footprint-two" class="fp-block"></div><div class="hint">💡 감축률이 높더라도 무대 조도, 실내 쾌적성, 관객 안전, 접근성을 함께 고려해야 합니다. 이 앱은 이러한 요소의 적합성까지 판정하지 않습니다.</div></div></section>
+<section class="panel" id="three">
+<div class="card"><h2>기술·가정 | 우리가 만든 장치로 얼마나 달라질까?</h2><p class="sub">발구름 발전장치(압전소자)와 스마트 조명(사람이 없을 때 소등)을 적용하기 전·후의 전력과 온실가스 배출 추정치를 비교합니다. 설계 도면과 활동지 작성은 이 웹앱에서 하지 않습니다.</p>
+<div class="actions"><button class="btn" id="techFromNew">2차시 친환경 설계 조건 불러오기</button><button class="btn secondary" id="techFromOld">2차시 기존 설계 조건 불러오기</button></div>
+<div class="hint">⚙️ <b>비교 기준</b>으로 불러온 장비 구성과 공연 시간이 유지된다고 가정합니다. 스마트 조명은 전력 <b>사용량 감소</b>, 발구름 발전장치는 회수한 전력의 <b>외부 전력 대체</b>로 따로 계산합니다.</div>
+<div id="techBaseSummary"></div></div>
+<div class="compare">
+<div class="card"><h3>👣 발구름 발전장치</h3><p class="sub">관객이 발전판을 밟거나 뛰는 횟수에 따라 생산한 전력을 계산합니다.</p><div class="grid2">
+<div class="field"><label for="techPeople">참여 관객 수 (명)</label><input id="techPeople" min="0" step="1" type="number" value="100"/></div>
+<div class="field"><label for="techSteps">1인당 유효 발구름 횟수 (회)</label><input id="techSteps" min="0" step="1" type="number" value="200"/><small>발전판에 실제 힘이 전달되는 횟수</small></div>
+<div class="field"><label for="techEnergy">발구름 1회당 회수 전기에너지 (mJ)</label><input id="techEnergy" min="0" step="0.01" type="number" value="11"/><small>연구 사례의 한 실험 조건을 참고한 예시값. 제작한 장치의 측정값으로 변경</small></div>
+<div class="field"><label for="techEfficiency">추가 저장·사용 효율 (%)</label><input id="techEfficiency" max="100" min="0" step="1" type="number" value="100"/><small>위 에너지 값에서 실제 사용 가능한 비율. 미측정 시 100%는 상한 추정</small></div>
+</div><div class="hint" id="piezoResult"></div></div>
+<div class="card"><h3>💡 스마트 조명</h3><p class="sub">사람이 없는 구역의 조명을 자동으로 끄는 경우를 가정합니다.</p><div class="grid2">
+<div class="field"><label for="smartCount">자동 제어 대상 조명 수 (개)</label><input id="smartCount" min="0" step="1" type="number" value="10"/><small>전체 조명 수보다 클 수 없음</small></div>
+<div class="field"><label for="smartVacant">공연 중 조명을 끌 수 있는 시간 비율 (%)</label><input id="smartVacant" max="100" min="0" step="1" type="number" value="30"/><small>빈 구역에 한해서만 적용</small></div>
+<div class="field"><label for="smartStandby">센서·제어기 평균 소비전력 (W)</label><input id="smartStandby" min="0" step="0.1" type="number" value="0"/><small>미측정 시 0W는 절전 효과 상한 추정. 실제 값 확인 권장</small></div>
+</div><div class="grid2" style="margin-top:14px"><div class="field"><label for="smartLuxBefore">스마트 조명 적용 전 무대 조도 (lx)</label><input id="smartLuxBefore" placeholder="직접 측정" step="0.1" type="number" min="0" max="2000"/></div><div class="field"><label for="smartLuxAfter">스마트 조명 적용 후 무대 조도 (lx)</label><input id="smartLuxAfter" placeholder="직접 측정" step="0.1" type="number" min="0" max="2000"/></div></div><small>무대 중앙의 같은 지점에서 측정하세요. 관객석 암전은 가능하지만 출입구·이동 통로·피난 조명은 유지해야 합니다.</small><div class="hint" id="smartResult"></div><div class="hint" id="techComfort" role="status"></div></div></div>
+<div class="card"><h3>📊 장치 적용 전·후 비교</h3><div class="metrics" id="techMetrics"></div><div style="overflow-x:auto"><table class="comparisonTable"><thead><tr><th>항목</th><th>장치 적용 전</th><th>장치 적용 후</th><th>변화</th></tr></thead><tbody id="techRows"></tbody></table></div><div class="bars" id="techBars"></div><div class="visual-compare" id="techVisual"></div><div id="footprint-tech" class="fp-block"></div><div class="hint" id="techAlert"></div><p class="note">이 실험에서 발구름 발전 전력은 공연장의 전력 수요를 초과해 차감되지 않습니다. 발전량이 매우 작으면 kWh 화면에서 0.00으로 보일 수 있으므로 Wh와 J도 함께 확인하세요.</p></div></section>
+<section class="panel" id="sources"><div class="card sources"><h2>계산 원리와 근거 자료</h2><h3>① 전력 사용량 계산</h3><p><b>전력 사용량(kWh) = 소비전력(W) × 장비 수(대) × 가동 시간(h) ÷ 1,000</b></p><p>조명·음향·냉난방·기타 장비 각각을 계산한 뒤 합산합니다. 소비전력은 반드시 장비 명판, 설명서 또는 전력측정기에서 확인하세요. 초기 입력값은 <b>기능 시연을 위한 임의의 예시값</b>이며, 특정 학교나 제조사의 실측 자료가 아닙니다.</p><h3>② 전력 사용에 따른 온실가스 배출량</h3><p><b>예상 배출량(kgCO₂eq) = 전력 사용량(kWh) × 전력 소비단 배출계수(kgCO₂eq/kWh)</b></p><p>기본 배출계수: <b id="factorDisplay">0.4173 kgCO₂eq/kWh</b>. 2025년 12월 공개된 우리나라 전력 소비단 배출계수의 2023년 기준값을 사용합니다. 동일 단위로 환산한 수치입니다(0.4173 tCO₂eq/MWh = 0.4173 kgCO₂eq/kWh).</p><ul><li><a href="https://tips.energy.or.kr/carbon/Ggas_tatistics03.do" rel="noopener noreferrer" target="_blank">한국에너지공단 EG-TIPS · 전력 배출계수 (2025.12 공표, 2023년 기준 소비단)</a></li><li><a href="https://www.mcee.go.kr/m/mob/board/read.do?boardId=1852120&amp;boardMasterId=939&amp;menuId=156" rel="noopener noreferrer" target="_blank">기후에너지환경부 · 전력 배출계수 갱신 관련 보도자료 (2026.03.25)</a></li><li><a href="https://www.gir.go.kr/" rel="noopener noreferrer" target="_blank">온실가스종합정보센터(GIR) · 국가 승인 온실가스 배출계수 공표 기관</a></li></ul><div class="hint">⚠️ 이 결과는 전력 사용에 따른 <b>간접 온실가스 배출 추정치</b>입니다. 장비 생산·운송, 관객 이동, 폐기물, 연료 직접 연소 등은 포함하지 않습니다. 실제 전력량은 장비 설정, 냉난방 부하, 대기전력 등에 따라 달라집니다.</div><h3>③ 입력 데이터와 가정</h3><p>강당 면적과 관객 수는 현장 환경을 이해하기 위한 참고 입력값으로, 이 단순 계산식에서 전력량을 직접 증가시키지 않습니다. 냉난방 소비전력(W)과 가동 시간(h)을 직접 입력하여 반영합니다. 장비별 가동 시간은 기본적으로 공연 시간과 같게 가정합니다.</p><h3>④ 발구름 발전장치의 계산 원리와 연구 출처</h3><p>관객의 유효 발구름 수 × 1회당 회수에너지(mJ) ÷ 1,000 = 발전에너지(J). <b>1 kWh = 3,600,000 J</b>입니다. 앱의 기본 11mJ/회는 실제 학교 장치의 측정값이 아니라 연구에서 보고된 한 실험 조건의 값입니다. 압전소자 개수, 구조, 힘, 정류·저장 회로에 따라 크게 달라집니다.</p><ul><li><a href="https://www.sciencedirect.com/science/article/pii/S0924424721005008" rel="noopener noreferrer" target="_blank">Yingyong 외 (2021), Evaluation of harvesting energy from pedestrians using piezoelectric floor tile energy harvester (11.0~32.0mJ 등 측정 사례)</a></li><li><a href="https://www.sciencedirect.com/science/article/pii/S0924424717320095" rel="noopener noreferrer" target="_blank">Panthongsy 외 (2018), Fabrication and evaluation of energy harvesting floor (3.49mJ/보행 사례)</a></li></ul><h3>⑤ 스마트 조명의 계산 원리와 가정</h3><p>절약 전력량(kWh) = 제어 조명 수 × 조명 소비전력(W) × 공연시간(h) × 자동 소등 비율 ÷ 1,000 − 센서·제어기의 사용전력량. 조명 소비전력과 공연 시간은 2차시에서 가져온 값이며, 소등 비율과 제어기 소비전력은 <b>시나리오 입력값</b>입니다. 실제 자동제어 절감률에 대한 공인 보편값으로 간주하지 않습니다. 공간의 실제 점유율과 조도·안전 조건을 확인해야 합니다.</p><h3>⑥ 온도계와 조도계 측정값</h3><p>실내 온도(°C)는 냉난방 부하와 관련될 수 있지만, 전력 사용량을 계산하려면 실제 냉난방 장비 소비전력 또는 계측값이 별도로 필요합니다. 조도(lx)는 특정 위치의 조명 밝기를 나타내며 소비전력(W)과 동일한 물리량이 아닙니다. 따라서 본 웹앱은 온도·무대 조도를 현장 측정 참고값으로 기록하고, 이를 전력 사용량으로 자동 환산하지 않습니다. 관객석 암전 여부와 별개로 이동 통로·출입구·피난 조명의 안전을 확인해야 합니다. 측정 위치·일시·조명 상태를 통일해야 비교가 가능합니다.</p><h3>⑦ 배출계수 변경</h3><div class="grid2"><div class="field"><label for="factor">전력 소비단 배출계수 (kgCO₂eq/kWh)</label><input id="factor" min="0" step="0.0001" type="number" value="0.4173"/><small>다른 공인 연도·자료의 계수 사용 시 출처를 확인하세요.</small></div><div class="field"><label for="factorSource">변경 계수의 출처·기준연도 (선택)</label><input id="factorSource" placeholder="예: 기관명, 기준연도" type="text"/></div></div><p class="note">계수를 변경하면 화면의 모든 결과가 즉시 재계산됩니다. 기본 출처는 위의 2025.12 공표 자료입니다.</p></div></section>
+</div><footer>이 웹앱은 학습용 계산·비교 도구이며, 학생의 분석·선정·설계안·기후행동 계획 작성은 별도 활동지에서 진행합니다.</footer></main><div aria-label="모둠 실험 결과 PDF 보고서" class="report" id="printReport"></div>
+<script>
+const initial={area:400,audience:200,hours:2,lights:30,lightW:100,speakers:4,speakerW:500,hvac:2,hvacW:2500,other:2,otherW:250};const keys=[['area','강당 면적','㎡','운영 환경 참고값'],['audience','관객 수','명','운영 환경 참고값'],['hours','공연 및 장비 가동 시간','시간','모든 장비에 공통 적용'],['lights','조명 개수','개',''],['lightW','조명 1개 소비전력','W','LED 사용 시 제품 표시값 확인'],['speakers','음향 장비 개수','대',''],['speakerW','음향 장비 1대 소비전력','W','실제 평균 소비전력 확인 권장'],['hvac','냉난방 장비 개수','대',''],['hvacW','냉난방 1대 소비전력','W','가변 부하로 실제 값과 차이 가능'],['other','기타 전기장비 개수','대',''],['otherW','기타 장비 1대 소비전력','W','']];
+const state={one:{...initial},old:{...initial},new:{...initial,lights:30,lightW:20,hvacW:1800},baseline:null,factor:.4173,oneEdited:{},newEdited:{}};try{const saved=JSON.parse(localStorage.getItem(accountStorageKey('greenconcert-student-v3')));if(saved){for(const k of ['one','old','new'])if(saved[k])state[k]={...initial,...saved[k]};if(saved.baseline)state.baseline=saved.baseline;if(saved.oneEdited&&typeof saved.oneEdited==='object')state.oneEdited={...saved.oneEdited};else for(const k of Object.keys(initial))if(state.one[k]!==initial[k])state.oneEdited[k]=true;if(saved.newEdited&&typeof saved.newEdited==='object')state.newEdited={...saved.newEdited};else for(const k of Object.keys(initial))if(state.new[k]!==({...initial,lightW:20,hvacW:1800})[k])state.newEdited[k]=true;state.old={...state.one};if(Number.isFinite(saved.factor)&&saved.factor>=0)state.factor=saved.factor;}}catch(e){}
+const fmt=(x,d=2)=>Number(x).toLocaleString('ko-KR',{maximumFractionDigits:d,minimumFractionDigits:d});const safe=n=>Math.max(0,Number(n)||0);const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+function calculation(data){const h=safe(data.hours);const items=[['조명',safe(data.lights)*safe(data.lightW)*h/1000],['음향',safe(data.speakers)*safe(data.speakerW)*h/1000],['냉난방',safe(data.hvac)*safe(data.hvacW)*h/1000],['기타',safe(data.other)*safe(data.otherW)*h/1000]];const sum=items.reduce((a,b)=>a+b[1],0);return{items,sum,carbon:sum*state.factor};}
+function renderFields(id,group){document.getElementById(id).innerHTML='<div class="data-grid">'+keys.map(([key,label,unit,note])=>`<div class="field"><label for="${group}-${key}">${label} (${unit})</label><input id="${group}-${key}" type="number" min="0" ${['area','audience','lights','speakers','hvac','other'].includes(key)?'step="1"':'step="any"'} data-group="${group}" data-key="${key}" class="${group==='old'?'read-only-value':((group==='one'&&!state.oneEdited[key])||(group==='new'&&!state.newEdited[key])?'example-value':'student-value')}" ${group==='old'?'readonly aria-readonly="true" title="환경 1차시에서 입력한 운영 조건입니다."':''} value="${state[group][key]}">${note?`<small>${note}</small>`:''}</div>`).join('')+'</div>';}
+function metrics(id,arr){document.getElementById(id).innerHTML=arr.map(([label,val,unit])=>`<div class="metric"><span>${esc(label)}</span><strong>${fmt(val)} ${unit}</strong></div>`).join('');}
+function bars(id,items){const max=Math.max(1,...items.map(x=>x[1]));document.getElementById(id).innerHTML=items.map(([label,val])=>`<div class="barrow"><b>${label}</b><div class="track"><div class="fill" style="width:${val/max*100}%"></div></div><b>${fmt(val)} kWh</b></div>`).join('');}
+function deltaText(before,after,unit){const change=before-after;const pct=before>0?change/before*100:null;return `<span class="${change>=0?'positive':'negative'}">${change>=0?'감소':'증가'} ${fmt(Math.abs(change))} ${unit}${pct!==null?` (${fmt(Math.abs(pct),1)}%)`:''}</span>`}
+
+function escHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",[String.fromCharCode(34)]:"&quot;",[String.fromCharCode(39)]:"&#39;"}[c]));}
+function renderFootprintCard(calc,title){
+ const total=Math.max(0,calc.carbon||0);
+ const items=(calc.items||[]).map(([name,kwh])=>({name,kwh:Math.max(0,kwh),carbon:Math.max(0,kwh)*state.factor}));
+ const totalForPct=items.reduce((a,b)=>a+b.carbon,0);
+ const flexValues=(totalForPct>0?items.map(x=>Math.max(x.carbon,0.001)):items.map(()=>1));
+ const segs=items.map((it,i)=>`<div class="fp-seg s${i+1}" style="flex:${flexValues[i]}"><div>${escHtml(it.name)}<small>${totalForPct>0?fmt(it.carbon/totalForPct*100,1):'0.0'}%</small></div></div>`).join('');
+ const rows=items.map(it=>{const pct=totalForPct>0?it.carbon/totalForPct*100:0;return `<div class="fp-row"><div class="fp-row-top"><b>${escHtml(it.name)}</b><strong>${fmt(it.carbon,4)} kgCO₂eq</strong></div><small>${fmt(it.kwh,4)} kWh · 전체의 ${fmt(pct,1)}%</small><div class="fp-row-bar"><span style="width:${Math.min(100,Math.max(0,pct))}%"></span></div></div>`}).join('');
+ return `<div class="fp-card"><div class="fp-card-header"><b>👣 ${escHtml(title)}</b><div class="fp-total"><span>총 탄소발자국</span><strong>${fmt(total,4)} kgCO₂eq</strong></div></div><div class="fp-layout"><div class="fp-print" aria-hidden="true"><div class="fp-toe t1">CO₂</div><div class="fp-toe t2"></div><div class="fp-toe t3"></div><div class="fp-toe t4"></div><div class="fp-toe t5"></div><div class="fp-sole"><div class="fp-segments">${segs}</div></div></div><div class="fp-list">${rows}</div></div><p class="fp-note">발자국 안의 색 면적은 각 항목의 상대적인 탄소배출 기여도를 나타냅니다.</p></div>`;
+}
+function renderFootprintSingle(target,title,calc){const el=document.getElementById(target); if(!el) return; el.innerHTML=`<h4 class="fp-heading">👣 탄소발자국 시각화</h4>${renderFootprintCard(calc,title)}`;}
+function renderFootprintPair(target,titleA,calcA,titleB,calcB){const el=document.getElementById(target); if(!el) return; const diff=(calcA.carbon||0)-(calcB.carbon||0); const pct=(calcA.carbon||0)>0?diff/(calcA.carbon||0)*100:null; const cls=diff>=0?'':'bad'; const label=Math.abs(diff)<1e-10?'배출량 변화 없음':(diff>=0?`총 ${fmt(diff,4)} kgCO₂eq 감소 · ${fmt(pct,1)}% 절감`:`총 ${fmt(Math.abs(diff),4)} kgCO₂eq 증가 · ${fmt(Math.abs(pct),1)}% 증가`); el.innerHTML=`<h4 class="fp-heading">👣 탄소발자국 전·후 비교</h4><div class="fp-diff ${cls}">${label}</div><div class="fp-pair">${renderFootprintCard(calcA,titleA)}${renderFootprintCard(calcB,titleB)}</div>`;}
+function techFootprintData(baseSum,generatedKWh,savedGross,controller){
+ const base=calculation(techBase);
+ const baseItems=base.items.map(([name,kwh])=>({name,kwh:Math.max(0,kwh)}));
+ const usageAfter=[
+   {name:baseItems[0].name,kwh:Math.max(0,baseItems[0].kwh-savedGross)},
+   {name:baseItems[1].name,kwh:baseItems[1].kwh},
+   {name:baseItems[2].name,kwh:baseItems[2].kwh},
+   {name:baseItems[3].name,kwh:Math.max(0,baseItems[3].kwh+controller)}
+ ];
+ const afterDemand=usageAfter.reduce((a,b)=>a+b.kwh,0);
+ const gridAfter=Math.max(0,afterDemand-generatedKWh);
+ const scale=afterDemand>0?gridAfter/afterDemand:0;
+ const afterGridItems=usageAfter.map(x=>[x.name,x.kwh*scale]);
+ return {before:base,after:{items:afterGridItems,sum:gridAfter,carbon:gridAfter*state.factor}};
+}
+function renderResults(){const o=calculation(state.one);metrics('metrics-one',[['총 예상 전력 사용량',o.sum,'kWh'],['총 예상 온실가스 배출량',o.carbon,'kgCO₂eq'],['전력 배출계수',state.factor,'kg/kWh']]);bars('bars-one',o.items);renderFootprintSingle('footprint-one','현재 운영 조건',o);const old=calculation(state.old),neu=calculation(state.new);const cut=old.sum-neu.sum;const pct=old.sum>0?cut/old.sum*100:null;metrics('metrics-two',[['기존 예상 사용량',old.sum,'kWh'],['개선 예상 사용량',neu.sum,'kWh'],['예상 전력 절감률',pct===null?0:pct,'%']]);const rows=[...old.items.map((x,i)=>[x[0],x[1],neu.items[i][1],'kWh']),['합계 전력',old.sum,neu.sum,'kWh'],['온실가스',old.carbon,neu.carbon,'kgCO₂eq']];document.getElementById('comparisonRows').innerHTML=rows.map(([name,a,b,u])=>`<tr><td>${name}</td><td>${fmt(a)} ${u}</td><td>${fmt(b)} ${u}</td><td>${deltaText(a,b,u)}</td></tr>`).join('');document.getElementById('compareBars').innerHTML=`<h3>총 예상 전력 사용량 비교</h3>`;const max=Math.max(1,old.sum,neu.sum);document.getElementById('compareBars').innerHTML += [['기존',old.sum],['개선',neu.sum]].map(([k,v])=>`<div class="barrow"><b>${k}</b><div class="track"><div class="fill" style="width:${v/max*100}%"></div></div><b>${fmt(v)} kWh</b></div>`).join('');if(typeof renderImpactVisual==='function'){renderImpactVisual('designVisual',old.sum,neu.sum,'기존 설계','개선 설계','kWh');}renderFootprintPair('footprint-two','기존 설계',old,'친환경 설계안',neu);}
+function persist(){try{localStorage.setItem(accountStorageKey('greenconcert-student-v3'),JSON.stringify(state));}catch(e){}}
+function renderAll(){renderFields('fields-one','one');renderFields('fields-old','old');renderFields('fields-new','new');document.getElementById('factor').value=state.factor;document.getElementById('factorDisplay').textContent=fmt(state.factor,4)+' kgCO₂eq/kWh';renderResults();persist();}
+document.addEventListener('input',e=>{if(e.target.matches('input[data-group]')){const{group,key}=e.target.dataset;const n=Number(e.target.value);if(group==='old'){e.target.value=String(state.one[key]);return;}if(e.target.value!==''&&Number.isFinite(n)&&n>=0){state[group][key]=n;if(group==='one'){state.oneEdited[key]=true;state.old[key]=n;const oldInput=document.getElementById('old-'+key);if(oldInput)oldInput.value=String(n);}if(group==='new')state.newEdited[key]=true;e.target.classList.remove('example-value');e.target.classList.add('student-value');renderResults();persist();}}if(e.target.id==='factor'){const n=Number(e.target.value);if(e.target.value!==''&&Number.isFinite(n)&&n>=0){state.factor=n;document.getElementById('factorDisplay').textContent=fmt(n,4)+' kgCO₂eq/kWh';renderResults();persist();}}});
+document.querySelector('.gc-workspace>.tabs')?.addEventListener('click',event=>{
+ const btn=event.target.closest('button.tab[data-tab]');if(!btn)return;
+ const panel=document.getElementById(btn.dataset.tab);if(!panel)return;
+ document.querySelectorAll('.gc-workspace>.tabs button.tab').forEach(x=>x.classList.toggle('active',x===btn));
+ document.querySelectorAll('.gc-workspace>.panel').forEach(x=>x.classList.toggle('active',x===panel));
+ document.documentElement.classList.remove('gc-mobile-open');
+});
+window.addEventListener('gc-remote-data',event=>{
+ if(!event.detail.keys.includes(accountStorageKey('greenconcert-student-v3')))return;
+ let saved;try{saved=JSON.parse(localStorage.getItem(accountStorageKey('greenconcert-student-v3'))||'{}')}catch(e){return;}
+ for(const group of ['one','old','new'])if(saved[group])Object.assign(state[group],saved[group]);
+ state.old={...state.one};
+ if(saved.oneEdited)state.oneEdited={...saved.oneEdited};
+ if(saved.newEdited)state.newEdited={...saved.newEdited};
+ if(typeof saved.factor==='number')state.factor=saved.factor;
+ for(const group of ['one','old','new'])for(const [key] of keys){
+   const input=document.getElementById(group+'-'+key);if(!input||document.activeElement===input)continue;
+   if(input.value!==String(state[group][key]))input.value=state[group][key];
+   if(group!=='old'){
+     const edited=group==='one'?state.oneEdited[key]:state.newEdited[key];
+     input.classList.toggle('example-value',!edited);input.classList.toggle('student-value',!!edited);
+   }
+ }
+ const factor=document.getElementById('factor');if(factor&&document.activeElement!==factor)factor.value=state.factor;
+ const display=document.getElementById('factorDisplay');if(display)display.textContent=fmt(state.factor,4)+' kgCO₂eq/kWh';
+ renderResults();
+});
+document.getElementById('resetOne').onclick=()=>{if(confirm('1차시 입력값을 예시값으로 초기화할까요?')){state.one={...initial};state.old={...state.one};state.oneEdited={};state.baseline=null;renderAll()}};document.getElementById('copyExisting').onclick=()=>{state.new={...state.old};state.newEdited={};renderAll()};renderAll();
+</script>
+<script>
+const techKey=accountStorageKey('allconcert-tech-v1');
+let techBase={...state.new};
+const techFields=['techPeople','techSteps','techEnergy','techEfficiency','smartCount','smartVacant','smartStandby','smartLuxBefore','smartLuxAfter'];
+try{const v=JSON.parse(localStorage.getItem(techKey));if(v){if(v.base)techBase={...initial,...v.base};for(const k of techFields)if(v.values&&v.values[k]!=null)document.getElementById(k).value=v.values[k];}}catch(e){}
+function techNum(id){const el=document.getElementById(id);return Math.max(0,Number(el.value)||0)}
+function techSave(){try{localStorage.setItem(techKey,JSON.stringify({base:techBase,values:Object.fromEntries(techFields.map(k=>[k,document.getElementById(k).value]))}));}catch(e){}}
+function techRender(){
+ const base=calculation(techBase);const h=safe(techBase.hours);const lightLimit=safe(techBase.lights);
+ const audience=techNum('techPeople'),steps=techNum('techSteps'),mJ=techNum('techEnergy'),eff=Math.min(100,techNum('techEfficiency'))/100;
+ const generatedJ=audience*steps*mJ/1000*eff;const generatedKWh=generatedJ/3600000;
+ const requested=techNum('smartCount'),smartCount=Math.min(requested,lightLimit),vacancy=Math.min(100,techNum('smartVacant'))/100;
+ const savedGross=smartCount*safe(techBase.lightW)*h*vacancy/1000;
+ const controller=techNum('smartStandby')*h/1000;
+ const smartSaved=savedGross-controller;
+ const afterDemand=Math.max(0,base.sum-smartSaved);
+ const consumedFromGrid=Math.max(0,afterDemand-generatedKWh);
+ const utilizedGenerated=Math.min(generatedKWh,afterDemand);
+ const afterCarbon=consumedFromGrid*state.factor;const cut=base.sum-consumedFromGrid;
+ document.getElementById('techBaseSummary').innerHTML=`<div class="metrics"><div class="metric"><span>기준 공연 시간</span><strong>${fmt(h,1)}시간</strong></div><div class="metric"><span>기준 조명 수</span><strong>${fmt(lightLimit,0)}개</strong></div><div class="metric"><span>기준 전력 수요</span><strong>${fmt(base.sum,3)} kWh</strong></div></div>`;
+ document.getElementById('piezoResult').innerHTML=`총 유효 발구름 <b>${fmt(audience*steps,0)}회</b> · 예상 사용 가능 발전량 <b>${fmt(generatedJ,3)} J</b> = <b>${fmt(generatedKWh*1000,6)} Wh</b> (추가 효율 적용)`;
+ document.getElementById('smartResult').innerHTML=`소등 절약량 <b>${fmt(savedGross,4)} kWh</b> − 제어기 사용량 <b>${fmt(controller,4)} kWh</b> = 순 절약량 <b>${fmt(smartSaved,4)} kWh</b>`;
+ document.getElementById('techMetrics').innerHTML=[['장치 적용 전 전력망 사용량',base.sum,'kWh'],['장치 적용 후 전력망 사용량',consumedFromGrid,'kWh'],['예상 전력망 사용량 변화율',base.sum?cut/base.sum*100:0,'%']].map(([k,v,u])=>`<div class="metric"><span>${k}</span><strong>${fmt(v,4)} ${u}</strong></div>`).join('');
+ const row=(label,a,b,u,d=5)=>`<tr><td>${label}</td><td>${fmt(a,d)} ${u}</td><td>${fmt(b,d)} ${u}</td><td>${fmt(a-b,d)} ${u} 감소</td></tr>`;
+ document.getElementById('techRows').innerHTML=row('공연장 전력 수요',base.sum,afterDemand,'kWh')+row('외부 전력망 사용량',base.sum,consumedFromGrid,'kWh')+row('예상 간접 온실가스 배출량',base.carbon,afterCarbon,'kgCO₂eq')+`<tr><td>발구름 전력 생산량</td><td>0 Wh</td><td>${fmt(generatedKWh*1000,6)} Wh</td><td>+${fmt(generatedKWh*1000,6)} Wh 생산</td></tr>`;
+ const barMax=Math.max(0.0001,base.sum,consumedFromGrid);
+ document.getElementById('techBars').innerHTML=[['적용 전',base.sum],['적용 후',consumedFromGrid]].map(([k,v])=>`<div class="barrow"><b>${k}</b><div class="track"><div class="fill" style="width:${v/barMax*100}%"></div></div><b>${fmt(v,3)} kWh</b></div>`).join('');
+ if(typeof renderImpactVisual==='function')renderImpactVisual('techVisual',base.sum,consumedFromGrid,'장치 적용 전','장치 적용 후','kWh'); const techFp=techFootprintData(base.sum,generatedKWh,savedGross,controller); renderFootprintPair('footprint-tech','장치 적용 전',techFp.before,'장치 적용 후',techFp.after);
+ const warnings=[];if(requested>lightLimit)warnings.push('자동 제어 조명 수가 전체 조명보다 많아 계산에서는 전체 조명 수로 제한했습니다.');if(controller>savedGross)warnings.push('센서·제어기 소비전력이 소등으로 절약한 전력보다 커서 전체 전력 사용량이 증가합니다.');if(generatedKWh>afterDemand)warnings.push('발전량이 남더라도 전력망 사용량은 0 미만으로 계산하지 않습니다.');if(audience>safe(techBase.audience))warnings.push('참여 인원이 기준 관객 수를 초과합니다.');
+ document.getElementById('techAlert').innerHTML='⚠️ '+(warnings.length?warnings.join(' '):'발전량은 압전 발전판의 실제 측정값에 따라 달라집니다. 자동 소등은 사람이 없는 구역에만 적용하고, 안전·대피 조명은 유지해야 합니다.');techSave();
+}
+window.addEventListener('gc-remote-data',event=>{
+ if(!event.detail.keys.includes(techKey))return;
+ let data;try{data=JSON.parse(localStorage.getItem(techKey)||'{}')}catch(e){return;}
+ if(data.base)techBase={...initial,...data.base};
+ for(const id of techFields)if(data.values&&data.values[id]!==undefined){
+   const input=document.getElementById(id);if(input&&document.activeElement!==input)input.value=data.values[id];
+ }
+ techRender();
+});
+for(const id of techFields)document.getElementById(id).addEventListener('input',techRender);
+document.getElementById('techFromNew').onclick=()=>{techBase={...state.new};techRender()};
+document.getElementById('techFromOld').onclick=()=>{techBase={...state.old};techRender()};
+document.addEventListener('input',e=>{if(e.target.id==='factor')techRender()});
+techRender();
+</script>
+<script>
+/* 학생용 모둠 정보·실측값 자동 저장 및 보고서 생성 */
+(function(){
+const META_KEY=accountStorageKey('allconcert-meta-v2');
+const fields=['teamName','teamMembers','temperature','illuminance','temperatureAfter','illuminanceAfter','tempMin','tempMax','luxMin','luxMax','measurementPlace','measurementTime','factorSource'];
+let meta={};try{meta=JSON.parse(localStorage.getItem(META_KEY)||'{}')||{}}catch(e){}
+for(const id of fields){const el=document.getElementById(id);if(!el)continue;if(meta[id]!==undefined){const lim=({temperature:[0,40],temperatureAfter:[0,40],illuminance:[0,2000],illuminanceAfter:[0,2000]})[id];el.value=lim&&meta[id]!==''&&(Number(meta[id])<lim[0]||Number(meta[id])>lim[1])?'':meta[id];}el.addEventListener('input',saveMeta);el.addEventListener('change',saveMeta)}
+let statusTimer;
+function saveMeta(){for(const id of fields){const el=document.getElementById(id);if(!el)continue;const lim=({temperature:[0,40],temperatureAfter:[0,40],illuminance:[0,2000],illuminanceAfter:[0,2000]})[id];meta[id]=lim&&el.value!==''&&(Number(el.value)<lim[0]||Number(el.value)>lim[1])?'':el.value;}try{localStorage.setItem(META_KEY,JSON.stringify(meta));showStatus('✓ SQLite 서버로 자동 저장 중')}catch(e){showStatus('저장 실패: 브라우저 설정 또는 저장 공간을 확인하세요')}}
+window.addEventListener('gc-remote-data',event=>{
+ if(!event.detail.keys.includes(META_KEY))return;
+ try{meta=JSON.parse(localStorage.getItem(META_KEY)||'{}')||{}}catch(e){return;}
+ for(const id of fields){const input=document.getElementById(id);
+  if(input&&document.activeElement!==input&&meta[id]!==undefined)input.value=meta[id];
+ }
+ window.dispatchEvent(new Event('gc-main-measurements-changed'));
+});
+function showStatus(txt){document.getElementById('saveStatus').textContent=txt}
+function cell(v){return String(v===null||v===undefined||v===''?'—':v).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')}
+function table(headers,rows){return '<table><thead><tr>'+headers.map(x=>'<th>'+cell(x)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(x=>'<td>'+cell(x)+'</td>').join('')+'</tr>').join('')+'</tbody></table>'}
+function summaryData(x){const r=calculation(x);return [...r.items.map(t=>[t[0],fmt(t[1],5)+' kWh']),['합계',fmt(r.sum,5)+' kWh'],['예상 배출량',fmt(r.carbon,5)+' kgCO₂eq']]}
+function inputRows(x){return keys.map(([k,label,unit])=>[label,x[k]+' '+unit])}
+function makeReport(){saveMeta();renderResults();techRender();const one=calculation(state.one),old=calculation(state.old),improved=calculation(state.new);const before=calculation(techBase);const people=techNum('techPeople'),steps=techNum('techSteps'),energy=techNum('techEnergy'),eff=Math.min(100,techNum('techEfficiency'))/100;const joules=people*steps*energy/1000*eff,gen=joules/3600000;const lights=Math.min(techNum('smartCount'),safe(techBase.lights));const savings=lights*safe(techBase.lightW)*safe(techBase.hours)*Math.min(100,techNum('smartVacant'))/100/1000-techNum('smartStandby')*safe(techBase.hours)/1000;const afterDemand=Math.max(0,before.sum-savings),gridAfter=Math.max(0,afterDemand-gen);
+const measurement=[['실내 온도',meta.temperature!==''&&meta.temperature!==undefined?meta.temperature+' °C':'미기록'],['무대 조도',meta.illuminance!==''&&meta.illuminance!==undefined?meta.illuminance+' lx':'미기록'],['측정 위치',meta.measurementPlace||'미기록'],['측정 일시',meta.measurementTime?meta.measurementTime.replace('T',' '):'미기록']];
+
+const team='<h1>모두를 위한 학교 콘서트장 만들기</h1><p class="rmeta">모둠: '+cell(meta.teamName||'미입력')+'　 |　 조원: '+cell(meta.teamMembers||'미입력')+'</p><p class="rmeta">저장일시: '+cell(new Date().toLocaleString('ko-KR'))+'　 |　 전력 배출계수: '+cell(fmt(state.factor,4))+' kgCO₂eq/kWh</p>';
+let html='<div class="report-page">'+team+'<h2>1차시 · 강당 현장 측정 및 운영 조건 분석</h2><h3>온도계·조도계 실측 기록</h3>'+table(['측정 항목','측정값'],measurement)+(window.gcMeasurementReport?window.gcMeasurementReport():'')+'<h3>운영 조건</h3>'+table(['입력 항목','입력값'],inputRows(state.one))+'<h3>전력 사용량 및 배출량 추정</h3>'+table(['항목','분석 결과'],summaryData(state.one));
+
+html+='</div><div class="report-page">'+team+'<h2>2차시 · 기존 설계와 친환경 설계 비교</h2>'+table(['운영 조건','기존 설계','친환경 설계'],keys.map(([k,label,unit])=>[label,state.old[k]+' '+unit,state.new[k]+' '+unit]))+table(['분석 항목','기존','개선','절감량'],[['예상 전력 사용량',fmt(old.sum,5),fmt(improved.sum,5),fmt(old.sum-improved.sum,5)+' kWh'],['예상 온실가스 배출량',fmt(old.carbon,5),fmt(improved.carbon,5),fmt(old.carbon-improved.carbon,5)+' kgCO₂eq']])+(window.gcEnvironmentReport?window.gcEnvironmentReport():'')+'</div>';
+html+='<div class="report-page">'+team+'<h2>기술·가정 · 발구름 발전장치 및 스마트 조명</h2>'+table(['장치 조건','입력/측정값'],[['발구름 참여 관객',people+'명'],['1인당 유효 발구름',steps+'회'],['1회당 회수에너지',energy+' mJ'],['추가 사용 효율',fmt(eff*100,2)+' %'],['스마트 제어 조명',lights+'개'],['소등 가능 시간',techNum('smartVacant')+' %'],['제어기 소비전력',techNum('smartStandby')+' W'],['스마트 조명 적용 전 무대 조도',document.getElementById('smartLuxBefore').value||'미기록'],['스마트 조명 적용 후 무대 조도',document.getElementById('smartLuxAfter').value||'미기록']])+table(['분석 항목','결과'],[['발구름 회수에너지',fmt(joules,6)+' J / '+fmt(gen*1000,9)+' Wh'],['스마트 조명 순 절감량',fmt(savings,6)+' kWh'],['장치 적용 전 전력망 사용량',fmt(before.sum,6)+' kWh'],['장치 적용 후 전력망 사용량',fmt(gridAfter,6)+' kWh'],['장치 적용 전 예상 배출량',fmt(before.carbon,6)+' kgCO₂eq'],['장치 적용 후 예상 배출량',fmt(gridAfter*state.factor,6)+' kgCO₂eq']])+'<p>주의: 온도·조도는 전력 사용량으로 자동 환산하지 않습니다. 발구름 발전값은 실험 조건에 따른 추정치입니다.</p></div>';
+html += '<div class="report-page">'+team+'<h2>온도·조도 측정 기록 및 주의사항</h2>'+table(['구분','값'],[['변경 전 온도',meta.temperature||'미측정'],['변경 후 온도',meta.temperatureAfter||'미측정'],['변경 전 무대 조도',meta.illuminance||'미측정'],['변경 후 무대 조도',meta.illuminanceAfter||'미측정']])+'</div>';
+html += '<div class="report-page"><h2>위치별·장비별 개선 기록</h2>'+(window.gcEquipmentReport?.()||'')+(window.gcAllLocationReport||'')+'</div>';document.getElementById('printReport').innerHTML=html;
+}
+document.getElementById('savePdf').onclick=()=>{makeReport();window.print()};
+showStatus('✓ 같은 브라우저에 자동 저장 중');
+})();
+</script><script>
+function renderImpactVisual(target,before,after,beforeLabel,afterLabel,unit){
+ const dest=document.getElementById(target);if(!dest)return;
+ if(before===null||before===undefined||!Number.isFinite(before)||!Number.isFinite(after)){dest.innerHTML='';return;}
+ const d=before-after,pct=before>0?100*d/before:null,max=Math.max(before,after,0.000000001);
+ const u=unit||'kWh';const fmtV=x=>Number(x).toLocaleString('ko-KR',{maximumFractionDigits:Math.abs(x)<0.01?7:3});
+ const stateText=before===0?(after===0?'변화 없음':'이전 값이 0이라 절감률 계산 불가'):(Math.abs(d)<1e-10?'변화 없음':(d>0?'절감':'증가')+' '+fmtV(Math.abs(d))+' '+u+' · '+fmtV(Math.abs(pct))+'%');
+ const cls=d>1e-10?'':d< -1e-10?'inc':'neutral';
+ const safe=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const row=(label,v,isAfter)=>`<div class="viz-row ${isAfter?'after':''}"><b>${safe(label)}</b><div class="viz-rail"><div style="width:${(v/max*100).toFixed(6)}%"></div></div><strong>${fmtV(v)}</strong></div>`;
+ dest.innerHTML=`<h4 class="viz-heading">📊 적용 전 · 후 한눈에 비교</h4><div class="viz-cards"><div class="viz-card"><div class="eyebrow">${safe(beforeLabel)}</div><div class="big-number">${fmtV(before)}</div><div class="subnum">${safe(u)}</div></div><div class="viz-card after"><div class="eyebrow">${safe(afterLabel)}</div><div class="big-number">${fmtV(after)}</div><div class="subnum">${safe(u)}</div></div></div><div class="viz-strip">${row(beforeLabel,before,false)}${row(afterLabel,after,true)}</div><div class="viz-difference ${cls}">${stateText}</div><p class="note">막대는 같은 눈금(긴 막대 = 큰 값)을 사용합니다. 차이가 작을 때는 수치와 절감률도 확인하세요.</p>`;
+}
+(function(){
+ const target=document.getElementById('techComfort');
+ if(target)target.innerHTML='<b>💡 무대 조도 측정 주의</b> · 허용 입력 범위 0~2,000 lx. 무대 중앙의 같은 지점을 측정하세요. 관객석은 암전할 수 있으나 출입구·이동 통로·피난 조명은 유지해야 합니다.';
+ // 안내 범위는 학습 예시로 고정하여 기존 저장값이 화면 설명과 불일치하지 않도록 합니다.
+ for(const [id,value] of Object.entries({tempMin:0,tempMax:40,luxMin:0,luxMax:2000})){
+   const el=document.getElementById(id);if(el)el.value=String(value);
+ }
+})();
+// 입력 제한: 온도 0~40°C, 조도 0~2000 lx. 범위 밖 값은 저장하지 않습니다.
+(function(){
+ const bounds={temperature:[0,40],temperatureAfter:[0,40],illuminance:[0,2000],illuminanceAfter:[0,2000],smartLuxBefore:[0,2000],smartLuxAfter:[0,2000]};
+ const valid=(value,limits)=>value!=='' && Number.isFinite(Number(value)) && Number(value)>=limits[0] && Number(value)<=limits[1];
+ function correct(el,final){
+   const limits=bounds[el.id];if(!limits)return;
+   const value=el.value;
+   if(value==='')return;
+   const num=Number(value);
+   // 큰 값 또는 음수는 즉시 지웁니다. 아래쪽 범위는 입력 중의 중간 상태를 허용합니다.
+   if(!Number.isFinite(num)||num<0||num>limits[1]||(final&&num<limits[0])){
+     el.value='';
+     el.setCustomValidity('');
+     el.dispatchEvent(new Event('input',{bubbles:true}));
+     if(final){el.placeholder=`${limits[0]}~${limits[1]} 범위로 입력`;}
+   }
+ }
+ for(const [id,limits] of Object.entries(bounds)){
+   const el=document.getElementById(id);if(!el)continue;
+   el.min=String(limits[0]);el.max=String(limits[1]);
+   if(!valid(el.value,limits))el.value='';
+   el.addEventListener('input',()=>correct(el,false),{capture:true});
+   el.addEventListener('change',()=>correct(el,true));
+   el.addEventListener('blur',()=>correct(el,true));
+ }
+})();
+</script><script>
+/* 고등학생에게 설명이 필요한 단위 다섯 종류에 한해서 안내합니다. */
+(function(){
+ const meanings={
+   'kgCO₂eq':'이산화탄소환산량. 여러 온실가스의 배출 영향을 이산화탄소의 양으로 환산한 값입니다.',
+   'kWh':'킬로와트시. 전기에너지 사용량의 단위이며, 1,000 W 장치를 1시간 사용하면 1 kWh입니다.',
+   'W':'와트. 전기 장치가 소비하거나 생산하는 전력의 크기입니다.',
+   'lx':'럭스. 일정한 면에 도달하는 빛의 양을 나타내는 조도 단위입니다.',
+   'J':'줄. 에너지의 단위이며, 1 Wh는 3,600 J입니다.'
+ };
+ const pattern=/kgCO₂eq|kWh|(?<![A-Za-z])W(?![A-Za-z])|(?<![A-Za-z])J(?![A-Za-z])|(?<![A-Za-z])lx(?![A-Za-z])/g;
+ const root=document.querySelector('main');if(!root)return;
+ const tip=document.createElement('div');tip.id='unit-tooltip-top-layer';tip.setAttribute('role','tooltip');document.body.appendChild(tip);
+ let active=null;
+ function enhance(element){
+   if(!element || element.nodeType!==1 || element.closest('.unit-help,script,style,textarea,button,.report-page'))return;
+   const walker=document.createTreeWalker(element,NodeFilter.SHOW_TEXT,{acceptNode(n){
+     if(!n.nodeValue)return NodeFilter.FILTER_REJECT;
+     pattern.lastIndex=0;const matches=pattern.test(n.nodeValue);pattern.lastIndex=0;
+     if(!matches||!n.parentElement||n.parentElement.closest('.unit-help,script,style,textarea,button,.report-page'))return NodeFilter.FILTER_REJECT;
+     return NodeFilter.FILTER_ACCEPT;
+   }});
+   const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+   for(const node of nodes){const value=node.nodeValue;pattern.lastIndex=0;let m,last=0;const fragment=document.createDocumentFragment();
+     while((m=pattern.exec(value))!==null){
+       if(m.index>last)fragment.append(document.createTextNode(value.slice(last,m.index)));
+       const key=m[0];const span=document.createElement('span');span.className='unit-help';span.textContent=key;span.dataset.description=meanings[key];span.tabIndex=0;span.setAttribute('aria-label',key+': '+meanings[key]);span.setAttribute('aria-describedby','unit-tooltip-top-layer');fragment.append(span);last=m.index+key.length;
+     }
+     if(last<value.length)fragment.append(document.createTextNode(value.slice(last)));
+     node.parentNode.replaceChild(fragment,node);
+   }
+ }
+ function position(){if(!active)return;const r=active.getBoundingClientRect();const bounds=tip.getBoundingClientRect();const left=Math.max(12,Math.min(window.innerWidth-bounds.width-12,r.left+r.width/2-bounds.width/2));
+   const above=r.top-bounds.height-10;const top=above>=8?above:Math.min(window.innerHeight-bounds.height-8,r.bottom+10);tip.style.left=left+'px';tip.style.top=Math.max(8,top)+'px';
+ }
+ function show(el){if(!el || !el.isConnected)return;active=el;tip.textContent=el.dataset.description||'';tip.classList.add('visible');position();}
+ function hide(){active=null;tip.classList.remove('visible');}
+ root.addEventListener('pointerover',e=>{const el=e.target.closest?.('.unit-help');if(el)show(el)});
+ root.addEventListener('pointerout',e=>{const el=e.target.closest?.('.unit-help');if(el && !el.contains(e.relatedTarget))hide()});
+ root.addEventListener('focusin',e=>{const el=e.target.closest?.('.unit-help');if(el)show(el)});
+ root.addEventListener('focusout',e=>{if(e.target.closest?.('.unit-help'))hide()});
+ window.addEventListener('scroll',()=>{if(active)position()},true);
+ window.addEventListener('resize',()=>{if(active)position()});
+ enhance(root);
+ const observer=new MutationObserver(mutations=>{for(const change of mutations){for(const node of change.addedNodes){if(node.nodeType===1&&!node.classList.contains('unit-help'))enhance(node)}}});
+ observer.observe(root,{childList:true,subtree:true});
+})();
+</script>
+<script id="chat-sidebar-logic">
+(function(){
+  const nav=document.querySelector('.gc-workspace>.tabs'), account=document.getElementById('gcAccountBar');
+  if(!nav||!account)return;
+  const iconNames={team:'👥',collab:'👥',one:'🌡️',two:'🌿',three:'⚡',sources:'📖'};
+  const header=document.createElement('div');
+  header.className='gc-side-top';
+  header.innerHTML='<div class="gc-side-name"><span class="gc-side-logo">🌱</span><span class="gc-side-brand">콘서트장 실험실</span></div><button class="gc-side-toggle" type="button" aria-label="사이드바 접기 또는 펼치기" title="사이드바 접기/펼치기">☰</button>';
+  nav.prepend(header);
+  const group=document.createElement('div');
+  group.className='gc-side-group';group.textContent='수업 메뉴';
+  header.after(group);
+  nav.querySelectorAll('button.tab').forEach(btn=>{
+    const icon=document.createElement('span');
+    icon.className='gc-nav-icon';icon.setAttribute('aria-hidden','true');
+    icon.textContent=iconNames[btn.dataset.tab]||'•';
+    btn.prepend(icon);
+    btn.setAttribute('title',btn.querySelector('.tab-main')?.textContent||'');
+    btn.addEventListener('click',()=>{
+      if(window.matchMedia('(max-width:850px)').matches)document.documentElement.classList.remove('gc-mobile-open');
+    });
+  });
+  const spacer=document.createElement('div');spacer.className='gc-side-spacer';nav.append(spacer);
+  const footer=document.createElement('div');footer.className='gc-side-footer';footer.append(account);nav.append(footer);
+  const collapse=header.querySelector('.gc-side-toggle');
+  collapse.onclick=()=>{
+    if(window.matchMedia('(max-width:850px)').matches){document.documentElement.classList.remove('gc-mobile-open');return;}
+    const collapsed=document.documentElement.classList.toggle('gc-sidebar-collapsed');
+    collapse.setAttribute('aria-expanded',String(!collapsed));
+    collapse.textContent=collapsed?'☰':'☰';
+    try{localStorage.setItem('gc-chat-sidebar-collapsed',collapsed?'1':'0')}catch(e){}
+  };
+  if(localStorage.getItem('gc-chat-sidebar-collapsed')==='1')document.documentElement.classList.add('gc-sidebar-collapsed');
+  const trigger=document.createElement('button');trigger.type='button';trigger.className='gc-side-mobile-toggle';trigger.setAttribute('aria-label','수업 메뉴 열기');trigger.textContent='☰';
+  document.body.append(trigger);
+  trigger.onclick=()=>document.documentElement.classList.add('gc-mobile-open');
+  const overlay=document.createElement('div');overlay.className='gc-sidebar-backdrop';document.body.append(overlay);
+  overlay.onclick=()=>document.documentElement.classList.remove('gc-mobile-open');
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')document.documentElement.classList.remove('gc-mobile-open')});
+})();
+</script>
+<script id="extra-measure-logic">
+(function(){
+ const container=document.getElementById('extraMeasureRows');
+ const addButton=document.getElementById('addMeasureRow');
+ if(!container||!addButton)return;
+ const storageKey=accountStorageKey('concert-location-measurements-v1');
+ const allowed={tempBefore:[0,40],tempAfter:[0,40],luxBefore:[0,2000],luxAfter:[0,2000]};
+ const attr={tempBefore:'변경 전 온도 (°C)',tempAfter:'변경 후 온도 (°C)',luxBefore:'변경 전 무대 조도 (lx)',luxAfter:'변경 후 무대 조도 (lx)'};
+ const tidy=(value,min,max)=>{
+   if(value===''||value===null||value===undefined)return '';
+   const n=Number(value);return Number.isFinite(n)&&n>=min&&n<=max?String(value):'';
+ };
+ let records=[];
+ try{const saved=JSON.parse(localStorage.getItem(storageKey)||'[]');if(Array.isArray(saved))records=saved.slice(0,100).map(r=>({id:String(r.id||''),place:String(r.place||'').slice(0,120),tempBefore:tidy(r.tempBefore,0,40),tempAfter:tidy(r.tempAfter,0,40),luxBefore:tidy(r.luxBefore,0,2000),luxAfter:tidy(r.luxAfter,0,2000),recordedAt:String(r.recordedAt||'')}));}catch(e){}
+ let uid=0;
+ const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function save(){window.dispatchEvent(new CustomEvent('gc-measurements-changed'));try{localStorage.setItem(storageKey,JSON.stringify(records));const badge=document.getElementById('saveStatus');if(badge)badge.textContent='✓ SQLite 서버로 자동 저장 중';}catch(e){const badge=document.getElementById('saveStatus');if(badge)badge.textContent='저장 실패: 브라우저 저장소 확인';}}
+ function field(k,r){const [min,max]=allowed[k];return `<div class="field"><label>${attr[k]}<input data-key="${k}" type="number" inputmode="decimal" min="${min}" max="${max}" step="0.1" value="${escape(r[k])}" placeholder="${min}~${max}" /></label></div>`;}
+ function draw(){
+   if(!records.length){container.innerHTML='<p class="extra-measure-empty">추가 기록이 없습니다. 「＋ 측정 위치 추가」를 눌러 위치별 측정을 시작하세요.</p>';return;}
+   container.innerHTML=records.map((r,i)=>`<div class="extra-measure-row" data-row-id="${escape(r.id)}"><div class="extra-measure-row-top"><strong>측정 위치 ${i+2}</strong><button type="button" class="extra-measure-delete" data-remove="1" aria-label="측정 위치 ${i+2} 삭제">삭제</button></div><div class="extra-measure-grid"><div class="field"><label>측정 위치<input data-key="place" type="text" maxlength="120" placeholder="예: 무대 왼쪽 / 출입구" value="${escape(r.place)}"></label></div><div class="field"><label>측정 기록 일시 (KST)<input type="text" readonly value="${escape(r.recordedAt||'미기록')}"></label></div>${field('tempBefore',r)}${field('tempAfter',r)}${field('luxBefore',r)}${field('luxAfter',r)}</div></div>`).join('');
+ }
+ addButton.addEventListener('click',()=>{if(records.length>=100){alert('최대 100개 위치까지 기록할 수 있습니다.');return;}records.push({id:String(Date.now())+'-'+(++uid),place:'',tempBefore:'',tempAfter:'',luxBefore:'',luxAfter:'',recordedAt:''});draw();save();const inp=container.lastElementChild?.querySelector('input[data-key="place"]');inp?.focus();});
+ container.addEventListener('click',e=>{const remove=e.target.closest('[data-remove]');if(!remove)return;const row=remove.closest('[data-row-id]');records=records.filter(r=>r.id!==row.dataset.rowId);draw();save();});
+ function update(e,final){const input=e.target.closest('input[data-key]');if(!input)return;const row=input.closest('[data-row-id]');const r=records.find(x=>x.id===row?.dataset.rowId);if(!r)return;const key=input.dataset.key;if(key==='place'){r.place=input.value;r.recordedAt=gcKstStamp();const t=row.querySelector('input[readonly]');if(t)t.value=r.recordedAt;save();return;}const [min,max]=allowed[key];const raw=input.value;if(raw===''){r[key]='';r.recordedAt=gcKstStamp();save();return;}const num=Number(raw);
+   if(!Number.isFinite(num)||num<min||num>max){if(final||num<0||num>max){input.value='';r[key]='';r.recordedAt=gcKstStamp();save();}return;}
+   r[key]=raw;r.recordedAt=gcKstStamp();const t=row.querySelector('input[readonly]');if(t)t.value=r.recordedAt;save();
+ }
+ container.addEventListener('input',e=>update(e,false));container.addEventListener('change',e=>update(e,true));container.addEventListener('focusout',e=>update(e,true));
+ window.addEventListener('gc-remote-data',event=>{
+  if(!event.detail.keys.includes(storageKey))return;
+  try{const next=JSON.parse(localStorage.getItem(storageKey)||'[]');
+    if(Array.isArray(next))records=next.slice(0,100);
+  }catch(e){return;}
+  draw();window.dispatchEvent(new Event('gc-measurements-changed'));
+ });
+ // Called only while assembling the PDF report. Values are escaped for safe HTML insertion.
+ window.gcGetLocationRecords=()=>records.map(r=>({...r}));
+ window.gcMeasurementReport=function(){if(!records.length)return '';const tr=records.map((r,i)=>`<tr><td>${i+2}</td><td>${escape(r.place||'미기록')}</td><td>${escape(r.recordedAt||'미기록')}</td><td>${escape(r.tempBefore||'—')}</td><td>${escape(r.tempAfter||'—')}</td><td>${escape(r.luxBefore||'—')}</td><td>${escape(r.luxAfter||'—')}</td></tr>`).join('');return `<h3>위치별 추가 온도·조도 측정 기록</h3><table><thead><tr><th>번호</th><th>측정 위치</th><th>기록 일시(KST)</th><th>변경 전 온도 (°C)</th><th>변경 후 온도 (°C)</th><th>변경 전 무대 조도 (lx)</th><th>변경 후 무대 조도 (lx)</th></tr></thead><tbody>${tr}</tbody></table>`;};
+ draw();
+})();
+</script><script id="gc-temperature-simulation">
+function gcKstStamp(){
+ const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
+ const x=Object.fromEntries(p.filter(v=>v.type!=='literal').map(v=>[v.type,v.value]));
+ return `${x.year}-${x.month}-${x.day} ${x.hour}:${x.minute}`;
+}
+function gcKstDatetimeLocal(){return gcKstStamp().replace(' ','T')}
+(function(){
+ const t=document.getElementById('measurementTime');
+ if(!t)return;
+ t.readOnly=true;t.setAttribute('aria-readonly','true');
+ const mainFields=['measurementPlace','temperature','illuminance','temperatureAfter','illuminanceAfter'];
+ for(const id of mainFields){const input=document.getElementById(id);if(!input)continue;
+   input.addEventListener('change',()=>{if(input.value==='')return; t.value=gcKstDatetimeLocal();t.dispatchEvent(new Event('input',{bubbles:true}));window.dispatchEvent(new Event('gc-main-measurements-changed'));});
+   input.addEventListener('input',()=>{if(input.value!==''){t.value=gcKstDatetimeLocal();t.dispatchEvent(new Event('input',{bubbles:true}));}window.dispatchEvent(new Event('gc-main-measurements-changed'));});
+ }
+})();
+(function(){
+ const ids=['gcTempLocation','gcSetpoint','gcThermalFactor','gcCop','gcTargetLux'];
+ const el=id=>document.getElementById(id), key=accountStorageKey('concert-temperature-model-v1');
+ const saved=(()=>{try{return JSON.parse(localStorage.getItem(key)||'{}')||{}}catch(e){return {}}})();
+ for(const id of ids)if(saved[id]!==undefined&&id!=='gcTempLocation')el(id).value=saved[id];
+ let chosen=String(saved.gcTempLocation||'main');
+ function valid(id){const node=el(id),v=Number(node.value),min=Number(node.min),max=Number(node.max);return node.value!==''&&Number.isFinite(v)&&v>=min&&v<=max?v:null}
+ function numeric(v){return v!==null&&v!==undefined&&String(v).trim()!==''&&Number.isFinite(Number(v))?Number(v):null}
+ function currentRows(){return typeof window.gcGetLocationRecords==='function'?window.gcGetLocationRecords():[]}
+ function updateLocations(){
+  const sel=el('gcTempLocation');const rows=currentRows();
+  sel.innerHTML='<option value="main">'+gcEscape(document.getElementById('measurementPlace').value||'첫 번째 측정 위치')+'</option>' +rows.map(r=>`<option value="${gcEscape(r.id)}">${gcEscape(r.place||'추가 측정 위치')}</option>`).join('');
+  if([...sel.options].some(o=>o.value===chosen))sel.value=chosen;else{chosen='main';sel.value='main';}
+ }
+ function gcEscape(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+ let reportData=null;
+ function render(){
+  const row=chosen==='main'?null:currentRows().find(r=>r.id===chosen);
+  const temp=numeric(row?row.tempBefore:el('temperature').value);
+  const lux=numeric(row?row.luxBefore:el('illuminance').value);
+  const place=row?(row.place||'추가 측정 위치'):(el('measurementPlace').value||'첫 번째 측정 위치');
+  el('gcObservedTemp').value=temp===null?'미측정':temp.toFixed(1);
+  el('gcObservedLux').value=lux===null?'미측정':lux.toFixed(1);
+  const setpoint=valid('gcSetpoint'),capacity=valid('gcThermalFactor'),cop=valid('gcCop'),goalLux=valid('gcTargetLux');
+  const area=state.one.area;
+  const additional=temp!==null&&setpoint!==null&&capacity!==null&&cop!==null&&cop>0?area*capacity*Math.abs(temp-setpoint)/cop:null;
+  const baseline=calculation(state.old),improved=calculation(state.new);
+  const adjusted=additional===null?null:improved.sum+additional;
+  const pct=adjusted!==null&&baseline.sum>0?(baseline.sum-adjusted)/baseline.sum*100:null;
+  let luxInfo='1차시 조도 측정값이 없습니다.';
+  if(lux!==null&&goalLux!==null){const gap=goalLux-lux;luxInfo=`${gcEscape(place)} 실측 ${fmt(lux,1)} lx → 목표 ${fmt(goalLux,1)} lx (차이 ${gap>0?'+':''}${fmt(gap,1)} lx). 조도 변화는 전력 사용량으로 직접 환산하지 않습니다.`;}
+  reportData={place,temp,lux,setpoint,capacity,cop,goalLux,area,additional,baseline,improved,adjusted,pct,luxInfo};
+  el('gcModelResults').innerHTML=`<div class="gc-result-tile"><b>1차시 측정 온도 → 목표 온도</b><strong>${temp===null?'미측정':fmt(temp,1)+'°C'} → ${setpoint===null?'미입력':fmt(setpoint,1)+'°C'}</strong><small>선택 위치: ${gcEscape(place)} / 강당 면적 ${fmt(area,0)}㎡</small></div>`+
+  `<div class="gc-result-tile"><b>추가 냉난방 전력량 (수업용 추정)</b><strong>${additional===null?'계산 대기':fmt(additional,3)+' kWh'}</strong><small>기존 장비 사용량과 별도로 계산한 온도 조정 추정치</small></div>`+
+  `<div class="gc-result-tile"><b>개선 설계 + 추가 온도 조정</b><strong>${adjusted===null?'계산 대기':fmt(adjusted,3)+' kWh'}</strong><small>기본 개선 설계 ${fmt(improved.sum,3)} kWh + 추가 추정량 / 기준 설계 ${fmt(baseline.sum,3)} kWh${pct===null?'':` / 기준 대비 ${fmt(Math.abs(pct),1)}% ${pct>=0?'감소':'증가'}`}</small></div>`+
+  `<div class="gc-model-note"><b>💡 무대 조도 비교</b> · ${luxInfo}<br><b>온도 조건 반영 예상 탄소배출량</b>: ${adjusted===null?'계산 대기':fmt(adjusted*state.factor,3)+' kgCO₂eq'} (단순 모형이며 실측 배출량이 아닙니다.)</div>`;
+ }
+ function persistModel(){const obj=Object.fromEntries(ids.map(id=>[id,el(id).value]));try{localStorage.setItem(key,JSON.stringify(obj))}catch(e){}}
+ for(const id of ids){el(id).addEventListener('input',()=>{if(id==='gcTempLocation')chosen=el(id).value;render();persistModel()});el(id).addEventListener('change',()=>{if(id==='gcTempLocation')chosen=el(id).value;if(id!=='gcTempLocation'&&valid(id)===null){el(id).value=saved[id]??({gcSetpoint:25,gcThermalFactor:.015,gcCop:3,gcTargetLux:350}[id]);}render();persistModel()})}
+ const oldRender=renderResults;
+ renderResults=function(){oldRender();render()};
+ window.addEventListener('gc-measurements-changed',()=>{updateLocations();render()});
+ window.addEventListener('gc-main-measurements-changed',()=>{updateLocations();render()});
+ window.gcEnvironmentReport=function(){if(!reportData)return '';const d=reportData;const f=v=>v===null?'미측정':fmt(v,3);return `<h3>온도·무대 조도에 따른 친환경 설계 실험 (수업용 추정)</h3><table><tbody><tr><td>선택 측정 위치</td><td>${gcEscape(d.place)}</td></tr><tr><td>실측 온도 → 목표 온도</td><td>${f(d.temp)}°C → ${f(d.setpoint)}°C</td></tr><tr><td>실측 무대 조도 → 목표 조도</td><td>${f(d.lux)} lx → ${f(d.goalLux)} lx</td></tr><tr><td>추정 추가 냉난방 전력량</td><td>${f(d.additional)} kWh</td></tr><tr><td>친환경 설계 기본 전력량</td><td>${f(d.improved.sum)} kWh</td></tr><tr><td>온도 조정량 포함 개선 전력량</td><td>${f(d.adjusted)} kWh</td></tr><tr><td>예상 배출량</td><td>${d.adjusted===null?'계산 대기':fmt(d.adjusted*state.factor,3)+' kgCO₂eq'}</td></tr></tbody></table><p>추가 냉난방 전력은 면적·가정한 열용량·COP를 이용한 단순 추정입니다. 기존 냉난방 소비량과 중복될 수 있으므로 실제 계량값으로 해석하지 않습니다. 조도는 전력으로 환산하지 않습니다.</p>`};
+ window.addEventListener('gc-remote-data',event=>{
+  if(!event.detail.keys.includes(key))return;
+  let next;try{next=JSON.parse(localStorage.getItem(key)||'{}')||{}}catch(e){return;}
+  for(const id of ids)if(next[id]!==undefined&&document.activeElement!==el(id))el(id).value=next[id];
+  chosen=String(next.gcTempLocation||'main');updateLocations();render();
+ });
+ updateLocations();render();
+})();
+</script><script id="gc-all-equipment-bridge">
+(function(){
+ const categories=[{id:'light',title:'💡 조명',num:'lights',watt:'lightW'},{id:'sound',title:'🔊 음향',num:'speakers',watt:'speakerW'},{id:'hvac',title:'🌡️ 냉난방',num:'hvac',watt:'hvacW'},{id:'misc',title:'🔌 기타 전기장비',num:'other',watt:'otherW'}];
+ const key=accountStorageKey('concert-equipment-breakdown-v2');
+ const baseNew={...initial,lightW:20,hvacW:1800};
+ let saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')||{}}catch(e){}
+ let serial=0;
+ function makeRow(count,watt,id){return{id:id||('equip-'+Date.now().toString(36)+'-'+(++serial)),count:Math.max(0,Number(count)||0),watt:Math.max(0,Number(watt)||0),editedCount:false,editedWatt:false};}
+ const original={};const proposed={};
+ function initialize(){
+  for(const cat of categories){
+   let a=Array.isArray(saved.original?.[cat.id])?saved.original[cat.id]:null;
+   if(!a||!a.length)a=[makeRow(state.one[cat.num],state.one[cat.watt],'base-'+cat.id)];
+   original[cat.id]=a.map(x=>({...makeRow(x.count,x.watt,x.id),editedCount:!!x.editedCount,editedWatt:!!x.editedWatt}));
+   let b=Array.isArray(saved.proposed?.[cat.id])?saved.proposed[cat.id]:null;
+   if(!b||!b.length)b=[makeRow(state.new[cat.num],state.new[cat.watt],original[cat.id][0].id)];
+   proposed[cat.id]=b.map(x=>({...makeRow(x.count,x.watt,x.id),editedCount:!!x.editedCount,editedWatt:!!x.editedWatt}));
+  }
+ }
+ const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function save(){try{localStorage.setItem(key,JSON.stringify({original,proposed}))}catch(e){}}
+ function align(){
+  for(const cat of categories){
+   const existing=new Map(proposed[cat.id].map(x=>[x.id,x]));
+   proposed[cat.id]=original[cat.id].map(x=>existing.get(x.id)||makeRow(x.count,x.watt,x.id));
+  }
+ }
+ function totals(rows){const count=rows.reduce((n,r)=>n+Math.max(0,Number(r.count)||0),0);const watts=rows.reduce((n,r)=>n+Math.max(0,Number(r.count)||0)*Math.max(0,Number(r.watt)||0),0);return{count,watt:count>0?watts/count:0,watts};}
+ function apply(){
+  for(const cat of categories){
+   const a=totals(original[cat.id]),b=totals(proposed[cat.id]);
+   state.one[cat.num]=a.count;state.one[cat.watt]=a.watt;
+   state.old[cat.num]=a.count;state.old[cat.watt]=a.watt;
+   state.new[cat.num]=b.count;state.new[cat.watt]=b.watt;
+  }
+  persist();
+ }
+ function renderDetail(which){
+  const host=document.getElementById(which==='one'?'gcEquipmentOne':'gcEquipmentNew');if(!host)return;
+  const collection=which==='one'?original:proposed;
+  host.innerHTML=categories.map(cat=>{
+   const rows=collection[cat.id],sum=totals(rows);
+   return `<section class="gc-equip-category"><div class="gc-equip-cat-head"><strong>${cat.title}</strong>${which==='one'?`<button class="gc-equip-add" type="button" data-add-cat="${cat.id}">＋ 장비 추가</button>`:''}</div><div style="overflow-x:auto"><table class="gc-equip-table"><thead><tr><th style="width:22%">번호</th><th style="width:34%">개수 (개/대)</th><th style="width:44%">1대 소비전력 (W)</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${i+1}${which==='one'&&i>0?`<button class="gc-delete gc-delete-inline" type="button" aria-label="${cat.title} ${i+1} 삭제" data-remove-cat="${cat.id}" data-remove-row="${escape(r.id)}">삭제</button>`:''}</td><td><input aria-label="${cat.title} ${i+1} 개수" type="number" min="0" step="1" data-equip-kind="${which}" data-cat="${cat.id}" data-row="${escape(r.id)}" data-field="count" class="${r.editedCount?'gc-written':'gc-example'}" value="${r.count}"></td><td><input aria-label="${cat.title} ${i+1} 소비전력" type="number" min="0" step="any" data-equip-kind="${which}" data-cat="${cat.id}" data-row="${escape(r.id)}" data-field="watt" class="${r.editedWatt?'gc-written':'gc-example'}" value="${r.watt}"></td></tr>`).join('')}</tbody></table></div><div class="gc-equip-total">합계 ${fmt(sum.count,0)}개/대 · 총 소비전력 ${fmt(sum.watts,2)} W · ${fmt(sum.watts*safe(state.one.hours)/1000,3)} kWh</div></section>`;
+  }).join('');
+ }
+ function markSummaryReadonly(){
+  for(const cat of categories){
+   for(const group of ['one','new'])for(const field of [cat.num,cat.watt]){
+    const input=document.getElementById(group+'-'+field);if(!input)continue;
+    input.readOnly=true;input.setAttribute('aria-readonly','true');input.title='아래 장비별 세부 입력칸에서 수정합니다.';
+    const box=input.closest('.field');if(box)box.style.display='none';
+   }
+   for(const field of [cat.num,cat.watt]){
+    const old=document.getElementById('old-'+field);
+    if(old)old.value=String(state.old[field]);
+   }
+  }
+ }
+ function updateAll(){align();apply();renderFields('fields-one','one');renderFields('fields-old','old');renderFields('fields-new','new');markSummaryReadonly();renderDetail('one');renderDetail('new');renderResults();save();window.dispatchEvent(new Event('gc-equipment-updated'));}
+ window.addEventListener('gc-remote-data',event=>{
+   if(!event.detail.keys.includes(key))return;
+   let next;try{next=JSON.parse(localStorage.getItem(key)||'{}')||{}}catch(e){return;}
+   if(!next||typeof next!=='object')return;
+   saved=next;
+   initialize();updateAll();
+ });
+ initialize();updateAll();
+ document.addEventListener('input',function(e){
+  const inp=e.target.closest('input[data-equip-kind]');if(!inp)return;
+  const arr=inp.dataset.equipKind==='one'?original:proposed;
+  const row=arr[inp.dataset.cat]?.find(x=>x.id===inp.dataset.row);
+  if(!row)return;
+  if(inp.value===''||!inp.validity.valid||Number(inp.value)<0)return;
+  const value=Number(inp.value);if(!Number.isFinite(value))return;
+  row[inp.dataset.field]=value;
+  row[inp.dataset.field==='count'?'editedCount':'editedWatt']=true;
+  inp.classList.remove('gc-example');inp.classList.add('gc-written');
+  align();apply();renderResults();save();
+  for(const cat of categories){
+   for(const field of [cat.num,cat.watt]){
+    const a=document.getElementById('one-'+field),b=document.getElementById('old-'+field),c=document.getElementById('new-'+field);
+    if(a)a.value=String(state.one[field]);if(b)b.value=String(state.old[field]);if(c)c.value=String(state.new[field]);
+   }
+  }
+  document.querySelectorAll('.gc-equip-category').forEach((el,i)=>{
+   const cat=categories[i%categories.length];const group=i<categories.length?original:proposed;const sum=totals(group[cat.id]);const place=el.querySelector('.gc-equip-total');
+   if(place)place.textContent=`합계 ${fmt(sum.count,0)}개/대 · 총 소비전력 ${fmt(sum.watts,2)} W · ${fmt(sum.watts*safe(state.one.hours)/1000,3)} kWh`;
+  });
+  window.dispatchEvent(new Event('gc-equipment-updated'));
+ },true);
+ document.addEventListener('change',e=>{if(e.target.matches('input[data-equip-kind]')){updateAll();}},true);
+ document.addEventListener('click',function(e){
+  const add=e.target.closest('[data-add-cat]');
+  if(add){const cat=add.dataset.addCat;if(original[cat]?.length>=30){alert('장비 종류별 최대 30줄까지 기록할 수 있습니다.');return;}original[cat].push(makeRow(0,0));updateAll();return;}
+  const del=e.target.closest('[data-remove-cat]');if(del){const cat=del.dataset.removeCat;original[cat]=original[cat].filter(x=>x.id!==del.dataset.removeRow);updateAll();}
+ });
+ const reset=document.getElementById('resetOne');
+ if(reset)reset.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();if(!confirm('1차시 입력값과 장비 기록을 초기화할까요?'))return;
+   state.one={...initial};state.old={...initial};state.oneEdited={};
+   for(const cat of categories)original[cat.id]=[makeRow(initial[cat.num],initial[cat.watt],'base-'+cat.id)];
+   align();apply();renderResults();save();
+  for(const cat of categories){
+   for(const field of [cat.num,cat.watt]){
+    const a=document.getElementById('one-'+field),b=document.getElementById('old-'+field),c=document.getElementById('new-'+field);
+    if(a)a.value=String(state.one[field]);if(b)b.value=String(state.old[field]);if(c)c.value=String(state.new[field]);
+   }
+  }
+  document.querySelectorAll('.gc-equip-category').forEach((el,i)=>{
+   const cat=categories[i%categories.length];const group=i<categories.length?original:proposed;const sum=totals(group[cat.id]);const place=el.querySelector('.gc-equip-total');
+   if(place)place.textContent=`합계 ${fmt(sum.count,0)}개/대 · 총 소비전력 ${fmt(sum.watts,2)} W · ${fmt(sum.watts*safe(state.one.hours)/1000,3)} kWh`;
+  });
+  window.dispatchEvent(new Event('gc-equipment-updated'));
+ },true);
+ document.addEventListener('change',e=>{if(e.target.matches('input[data-equip-kind]')){updateAll();}},true);
+ const copy=document.getElementById('copyExisting');
+ if(copy)copy.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();
+  state.new={...state.one};state.newEdited={};
+  for(const cat of categories)proposed[cat.id]=original[cat.id].map(x=>makeRow(x.count,x.watt,x.id));
+  align();apply();renderResults();save();
+  for(const cat of categories){
+   for(const field of [cat.num,cat.watt]){
+    const a=document.getElementById('one-'+field),b=document.getElementById('old-'+field),c=document.getElementById('new-'+field);
+    if(a)a.value=String(state.one[field]);if(b)b.value=String(state.old[field]);if(c)c.value=String(state.new[field]);
+   }
+  }
+  document.querySelectorAll('.gc-equip-category').forEach((el,i)=>{
+   const cat=categories[i%categories.length];const group=i<categories.length?original:proposed;const sum=totals(group[cat.id]);const place=el.querySelector('.gc-equip-total');
+   if(place)place.textContent=`합계 ${fmt(sum.count,0)}개/대 · 총 소비전력 ${fmt(sum.watts,2)} W · ${fmt(sum.watts*safe(state.one.hours)/1000,3)} kWh`;
+  });
+  window.dispatchEvent(new Event('gc-equipment-updated'));
+ },true);
+ document.addEventListener('change',e=>{if(e.target.matches('input[data-equip-kind]')){updateAll();}},true);
+ // When other inputs, including 1st-period operating time, change, refresh equipment summaries.
+ document.addEventListener('change',e=>{if(e.target.matches('input[data-group="one"]')&&!e.target.hasAttribute('data-equip-kind')){renderDetail('one');renderDetail('new');}},false);
+ window.gcEquipmentReport=function(){
+  const lines=categories.map(cat=>{
+   const src=original[cat.id],dst=proposed[cat.id];
+   return src.map((r,i)=>{const newRow=dst.find(x=>x.id===r.id)||r;return `<tr><td>${escape(cat.title)} ${i+1}</td><td>${fmt(r.count,0)}</td><td>${fmt(r.watt,2)}</td><td>${fmt(newRow.count,0)}</td><td>${fmt(newRow.watt,2)}</td></tr>`}).join('');
+  }).join('');
+  return `<h3>장비별 기존·개선 운영 조건</h3><table><thead><tr><th>장비</th><th>기존 개수</th><th>기존 W</th><th>개선 개수</th><th>개선 W</th></tr></thead><tbody>${lines}</tbody></table>`;
+ };
+})();
+</script><script id="gc-all-location-bridge">
+(function(){
+ const key=accountStorageKey('concert-all-location-targets-v1');
+ let targets={};try{targets=JSON.parse(localStorage.getItem(key)||'{}')||{}}catch(e){}
+ const host=document.getElementById('gcAllLocationsRows'),summary=document.getElementById('gcAllLocationsSummary');
+ const single=document.getElementById('environmentModelCard');if(single)single.style.display='none';
+ function xss(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+ function num(v){return v===undefined||v===null||String(v).trim()===''?null:Number.isFinite(Number(v))?Number(v):null;}
+ function rows(){const base={id:'main',place:document.getElementById('measurementPlace').value||'첫 번째 측정 위치',tempBefore:document.getElementById('temperature').value,luxBefore:document.getElementById('illuminance').value};return [base,...(window.gcGetLocationRecords?.()||[])];}
+ function calc(){
+  const all=rows();const measured=all.filter(r=>{const n=num(r.tempBefore);return n!==null&&n>=0&&n<=40});
+  const factor=num(document.getElementById('gcThermalFactor')?.value)||.015,cop=num(document.getElementById('gcCop')?.value)||3;
+  const perArea=measured.length?state.one.area/measured.length:0;
+  const result=all.map(r=>{
+   const t=targets[r.id]||{};const temp=num(r.tempBefore),lux=num(r.luxBefore),goalT=t.temp===undefined?25:num(t.temp),goalL=t.lux===undefined?350:num(t.lux);
+   const kwh=temp!==null&&goalT!==null&&temp>=0&&temp<=40&&goalT>=0&&goalT<=40?perArea*factor*Math.abs(temp-goalT)/cop:null;
+   return {...r,temp,lux,goalT,goalL,kwh};
+  });
+  return {result,total:result.reduce((s,r)=>s+(r.kwh||0),0),have:measured.length,perArea};
+ }
+ function draw(){const data=calc();
+  host.innerHTML=`<div class="gc-location-wrap"><table class="gc-location-table"><thead><tr><th>1차시 측정 위치</th><th>측정 온도 (°C)</th><th>목표 온도 (°C)</th><th>측정 조도 (lx)</th><th>목표 조도 (lx)</th><th>추정 냉난방 전력 (kWh)</th></tr></thead><tbody>${data.result.map(r=>`<tr><td>${xss(r.place||'위치 미지정')}</td><td>${r.temp===null?'미측정':fmt(r.temp,1)}</td><td><input type="number" min="0" max="40" step=".5" value="${r.goalT===null?'':r.goalT}" data-target-id="${xss(r.id)}" data-target-field="temp" aria-label="${xss(r.place)} 목표 온도"></td><td>${r.lux===null?'미측정':fmt(r.lux,1)}</td><td><input type="number" min="0" max="2000" step="1" value="${r.goalL===null?'':r.goalL}" data-target-id="${xss(r.id)}" data-target-field="lux" aria-label="${xss(r.place)} 목표 조도"></td><td>${r.kwh===null?'—':fmt(r.kwh,3)}</td></tr>`).join('')}</tbody></table></div>`;
+  const base=calculation(state.old),improved=calculation(state.new),adjusted=improved.sum+data.total;
+  summary.innerHTML=`<div class="gc-model-mini"><b>위치별 목표 온도 조정 추정 전력량 합계</b><br><strong>${data.have?fmt(data.total,3)+' kWh':'온도 측정값 입력 대기'}</strong><br><small>온도 기록 ${data.have}개 위치 · 구역당 면적 ${fmt(data.perArea,1)}㎡ (동일 면적 가정)</small></div><div class="gc-model-mini"><b>개선 장비 전력 + 온도 조정 추정량</b><br><strong>${data.have?fmt(adjusted,3)+' kWh':'온도 측정값 입력 대기'}</strong><br><small>개선 장비 기본 ${fmt(improved.sum,3)} kWh · 기존 장비 ${fmt(base.sum,3)} kWh · 예상 배출량 ${data.have?fmt(adjusted*state.factor,3)+' kgCO₂eq':'미측정'}</small></div>`;
+  window.gcAllLocationReport=`<h3>위치별 목표 온도·조도 개선 시뮬레이션</h3><table><thead><tr><th>위치</th><th>측정 온도</th><th>목표 온도</th><th>측정 조도</th><th>목표 조도</th><th>냉난방 추정 kWh</th></tr></thead><tbody>${data.result.map(r=>`<tr><td>${xss(r.place)}</td><td>${r.temp??'미측정'}</td><td>${r.goalT??'미입력'}</td><td>${r.lux??'미측정'}</td><td>${r.goalL??'미입력'}</td><td>${r.kwh===null?'—':fmt(r.kwh,3)}</td></tr>`).join('')}</tbody></table><p>구역별 동일 면적 배분을 적용한 교육용 추가 부하이며, 기존 소비전력과 중복될 수 있습니다.</p>`;
+ }
+ host.addEventListener('change',e=>{const id=e.target.dataset.targetId,field=e.target.dataset.targetField;if(!id||!field)return;
+  const max=field==='temp'?40:2000,v=num(e.target.value);if(v===null||v<0||v>max){alert('입력 허용 범위를 확인하세요.');draw();return;}
+  if(!targets[id])targets[id]={};targets[id][field]=v;
+  try{localStorage.setItem(key,JSON.stringify(targets))}catch(e){}draw();
+ });
+ window.addEventListener('gc-measurements-changed',draw);
+ window.addEventListener('gc-main-measurements-changed',draw);
+ window.addEventListener('gc-equipment-updated',draw);
+ document.addEventListener('input',e=>{if(e.target.id==='gcThermalFactor'||e.target.id==='gcCop'||e.target.id==='factor'||e.target.dataset.group==='one')draw()});
+ window.addEventListener('gc-remote-data',event=>{
+  if(!event.detail.keys.includes(key))return;
+  try{targets=JSON.parse(localStorage.getItem(key)||'{}')||{}}catch(e){return;}
+  draw();
+ });
+ window.gcRenderAllLocations=draw;
+ draw();
+})();
+</script>
+<script id="group-collaboration-ui">
+(function(){
+const nav=document.querySelector('.gc-workspace>.tabs');if(!nav)return;
+const button=nav.querySelector('button.tab[data-tab="collab"]');
+const panel=document.getElementById('collab');
+if(!button||!panel)return;
+// The regular tab handler is registered for this tab along with all other tabs.
+
+const ui=document.getElementById('gcCollabMain');const message=document.getElementById('gcCollabMessage');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let data={users:[],groups:[],activeGroup:null,pending:[]};
+window.gcRenderGroupManager=function(next){
+ data=next||data;
+ const grp=data.activeGroup;
+ const status=document.querySelector('.gc-account-text small');
+ if(status)status.textContent=grp?'모둠 공동 작업 중':'모둠 가입 대기 중';
+ document.documentElement.classList.toggle('gc-needs-group',!grp);
+ const menu=document.querySelectorAll('.gc-workspace>.tabs .tab:not([data-tab="collab"])');
+ for(const b of menu){b.disabled=!grp;b.title=grp?'':'모둠에 가입하면 활동을 시작할 수 있습니다.';}
+ if(!grp){
+   const selected=document.querySelector('.gc-workspace>.tabs .tab.active');
+   if(selected?.dataset.tab!=='collab')document.querySelector('.gc-workspace>.tabs .tab[data-tab="collab"]')?.click();
+ }
+ // 모둠명과 실제 가입 완료된 모둠원 정보를 보고서의 숨겨진 필드와 동기화합니다.
+ if(grp){
+   const values={teamName:grp.name,teamMembers:(grp.members||[]).map(m=>m.username).join(', ')};
+   let changed=false;
+   for(const [id,value] of Object.entries(values)){
+     const input=document.getElementById(id);
+     if(input&&input.value!==value){input.value=value;input.dispatchEvent(new Event('input',{bubbles:true}));changed=true;}
+   }
+ }
+ let html='';
+ if(grp){
+   html+='<div class="gc-collab-box"><b>현재 모둠 정보</b><p><strong>'+esc(grp.name)+'</strong></p>';
+   if(grp.description)html+='<p class="gc-collab-note">'+esc(grp.description)+'</p>';
+   html+='<p class="gc-collab-note">모둠원: '+(grp.members||[]).map(m=>esc(m.username)+' ('+esc(m.userid)+')'+(m.role==='owner'?' · 모둠장':'')).join(', ')+'</p></div>';
+ }else{
+   html+='<div class="gc-collab-box"><b>현재 소속된 모둠이 없습니다.</b><p class="gc-collab-note">새 모둠을 만들거나 받은 초대를 수락해야 수업 내용을 공동 편집할 수 있습니다.</p></div>';
+   html+='<div class="gc-collab-box"><b>새 모둠 만들기 · 모둠 정보 입력</b>';
+   html+='<label for="gcGroupName">모둠 이름</label><input id="gcGroupName" maxlength="60" placeholder="예: Econnect">';
+   html+='<label for="gcGroupDescription">모둠 소개 / 활동 주제 (선택)</label><input id="gcGroupDescription" maxlength="200" placeholder="예: 모두를 위한 친환경 콘서트장 설계">';
+   html+='<p class="gc-collab-note">등록된 회원을 모둠원으로 선택하세요. 모둠을 만들면 선택한 회원에게 초대가 전송됩니다. 모둠원은 수락 후 합류합니다.</p>';
+   const available=(data.users||[]).filter(u=>!u.occupied);
+   if(!available.length)html+='<p class="gc-collab-note">초대 가능한 회원이 없습니다.</p>';
+   for(const user of available)html+=`<label class="gc-collab-member"><input type="checkbox" data-add-member="${user.id_num}"><span>${esc(user.username)} (${esc(user.userid)})</span></label>`;
+   html+='<div class="gc-collab-actions"><button class="primary" id="gcCreateGroup">모둠 생성 및 초대</button></div></div>';
+ }
+ if(!grp&&data.pending?.length){html+='<div class="gc-collab-box"><b>받은 초대</b>';for(const g of data.pending)html+=`<p><strong>${esc(g.name)}</strong> · 초대한 사람 ${esc(g.owner_name)} <button data-accept="${g.id}">수락</button> <button data-decline="${g.id}">거절</button></p>`;html+='</div>'}
+ if(grp){
+   html+='<div class="gc-collab-box"><b>모둠원 관리</b>';
+   if(grp.is_owner){
+     html+='<p class="gc-collab-note">다른 모둠에 가입하지 않은 회원만 추가 초대할 수 있습니다.</p>';
+     const candidates=(data.users||[]).filter(m=>!m.occupied&&!grp.members.some(a=>a.id_num===m.id_num)&&!grp.invited?.includes(m.id_num));
+     for(const member of candidates)html+=`<label class="gc-collab-member"><input type="checkbox" data-invite-member="${member.id_num}"><span>${esc(member.username)} (${esc(member.userid)})</span></label>`;
+     if(candidates.length)html+='<div class="gc-collab-actions"><button id="gcInviteGroup">선택한 회원 추가 초대</button></div>';
+     else html+='<p class="gc-collab-note">현재 추가 초대 가능한 회원이 없습니다.</p>';
+   }else html+='<div class="gc-collab-actions"><button id="gcLeaveGroup">모둠 탈퇴</button></div>';
+   html+='</div>';
+ }
+ ui.innerHTML=html;
+ const send=(action,detail)=>window.parent.postMessage({concertBridge:true,type:'group_action',action,detail},'*');
+ const el=id=>document.getElementById(id);
+ el('gcCreateGroup')?.addEventListener('click',()=>{
+   const name=el('gcGroupName').value.trim();
+   const description=el('gcGroupDescription').value.trim();
+   const members=[...document.querySelectorAll('[data-add-member]:checked')].map(x=>Number(x.dataset.addMember));
+   if(!name){message.textContent='모둠 이름을 입력하세요.';return;}
+   send('create',{name,description,members});message.textContent='모둠 생성 요청 중...';
+ });
+ el('gcInviteGroup')?.addEventListener('click',()=>{
+   const members=[...document.querySelectorAll('[data-invite-member]:checked')].map(x=>Number(x.dataset.inviteMember));
+   if(!members.length){message.textContent='초대할 회원을 선택하세요.';return;}
+   send('invite',{members});message.textContent='초대 요청 중...';
+ });
+ el('gcLeaveGroup')?.addEventListener('click',()=>send('leave',{}));
+ document.querySelectorAll('[data-accept]').forEach(x=>x.onclick=()=>send('accept',{group_id:Number(x.dataset.accept)}));
+ document.querySelectorAll('[data-decline]').forEach(x=>x.onclick=()=>send('decline',{group_id:Number(x.dataset.decline)}));
+};
+ window.gcShowGroupMessage=function(text){message.textContent=text};
+})();
+</script>
+</body></html>
